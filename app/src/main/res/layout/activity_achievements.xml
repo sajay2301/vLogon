@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+
+>
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/dimen_0"
+            android:id="@+id/llClubDetailsToolbar"
+            android:layout_height="wrap_content">
+        <include
+
+                layout="@layout/layout_toolbar"/>
+    </android.support.v7.widget.CardView>
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:tools="http://schemas.android.com/tools"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@android:color/white">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:tools="http://schemas.android.com/tools"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:background="@android:color/white"
+                      android:orientation="vertical"
+
+                      tools:context=".Activity.RegisterActivity">
+
+
+            <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                    android:weightSum="10">
+
+                <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/companyachivements"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+
+                <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:id="@+id/etcompany"
+
+                        android:ellipsize="end"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:hint="@string/companyachivements"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                    android:weightSum="10">
+
+                <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/titleachivements"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+
+                <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:id="@+id/ettitle"
+
+                        android:ellipsize="end"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:hint="@string/titleachivements"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                    android:weightSum="10">
+
+                <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/link"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+
+                <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:id="@+id/etlink"
+
+                        android:ellipsize="end"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:hint="@string/link"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                />
+
+            </LinearLayout>
+            <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                    android:weightSum="10">
+
+                <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@string/descriptionachivements"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"/>
+
+
+                <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:id="@+id/etdiscription"
+
+                        android:ellipsize="end"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:background="@drawable/rounded_corner"
+                        android:hint="@string/descriptionachivements"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                />
+
+            </LinearLayout>
+            <Button
+                    android:id="@+id/btnsave"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/fill_rounded_color"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:textAllCaps="false"
+                    android:text="Save"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"/>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

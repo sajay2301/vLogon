@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/dimen_0"
+            android:id="@+id/llClubDetailsToolbar"
+            android:layout_height="wrap_content">
+        <include
+
+                layout="@layout/layout_toolbar"/>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+            android:layout_below="@+id/llClubDetailsToolbar"
+            android:id="@+id/searchlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:gravity="center_vertical|center"
+                android:text="Enter Confirmation Code"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center_vertical|center"
+                android:text="Enter the code we sent to"
+                android:textSize="18dp"
+                android:textStyle="normal"/>
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:id="@+id/setmobilenumber"
+                android:gravity="center_vertical|center"
+                android:text="7884223559"
+                android:textSize="20dp"
+                android:textStyle="normal"/>
+
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="35dp"
+                android:background="@null"
+                android:gravity="left"
+                android:text="CODE"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+
+        <EditText
+                android:id="@+id/enterotp"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="15dp"
+                android:gravity="left|center_vertical"
+                android:background="@drawable/rounded_corner"
+                android:hint="Enter OTP"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+
+
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:gravity="right"
+                android:id="@+id/txtresendotp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:text="Resend OTP"
+                android:textColor="@color/redcolor"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+        <Button
+                android:id="@+id/btnVerify"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/fill_rounded_color"
+                android:text="Continue"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+
+    </LinearLayout>
+    <!-- List View -->
+
+</RelativeLayout>
+

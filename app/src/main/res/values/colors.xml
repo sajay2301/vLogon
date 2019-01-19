@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#000</color>
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="signuplogincolor">#c71e26</color>
+
+    <color name="skipbuttoncolorgray">#5d5d5d</color>
+    <color name="fontGray">#999696</color>
+
+    <color name="selectcountrysearchbarcolor">#460a0a0a</color>
+
+
+    <color name="greencolor">#54B948</color>
+    <color name="redcolor">#DA291C</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>
