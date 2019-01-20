@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "102370115946",
-    "firebase_url": "https://vlogon.firebaseio.com",
-    "project_id": "vlogon",
-    "storage_bucket": "vlogon.appspot.com"
+    "project_number": "274687615032",
+    "firebase_url": "https://vlogin-0001.firebaseio.com",
+    "project_id": "vlogin-0001",
+    "storage_bucket": "vlogin-0001.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:102370115946:android:e4e5fca1f814e7ae",
+        "mobilesdk_app_id": "1:274687615032:android:d534ab99d634cc9f",
         "android_client_info": {
-          "package_name": "com.vlogon"
+          "package_name": "com.vlogonapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "102370115946-66de5iehrmnotdgiq4l1rhjbjv43r7ju.apps.googleusercontent.com",
+          "client_id": "274687615032-8udfbb6bocppv7took30vj1k15uv6rlf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vlogon",
+            "package_name": "com.vlogonapp",
             "certificate_hash": "1f1900b71c504f99a5aebb69fcc26d35e023e527"
           }
         },
         {
-          "client_id": "102370115946-t2l2gfo6imns19uovofoe5v6v7j13hqi.apps.googleusercontent.com",
+          "client_id": "274687615032-h502e4h4vql4s3u0t018cpihdlvg2mrf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBSKf_VFbtPk3Gs1oUsQLTm1-C2DEVYYCc"
+          "current_key": "AIzaSyDOztWn63SbD5a3pzv-bvD7-YZ4M9tjUIs"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "102370115946-2f38gcv95rkulu4j5l7oc2brq5hdksl3.apps.googleusercontent.com",
+              "client_id": "274687615032-h502e4h4vql4s3u0t018cpihdlvg2mrf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
