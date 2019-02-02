@@ -1,0 +1,22 @@
+
+1)Backup and recovery to google drive,drop box or email with password
+
+2) firebase db for existing mobile and personal email id give option for restore
+
+3) ask for location and password with 2FA
+
+4) address book its simple last name,first name,mobile number,personal email
+
+5) import from mobile address book
+
+6) duplicate search and add manually
+
+7) invite for application by mobile number or email
+
+
+
+
+
+
+
+

@@ -1,35 +1,51 @@
 {
   "project_info": {
-    "project_number": "274687615032",
-    "firebase_url": "https://vlogin-0001.firebaseio.com",
-    "project_id": "vlogin-0001",
-    "storage_bucket": "vlogin-0001.appspot.com"
+    "project_number": "690808979353",
+    "firebase_url": "https://vlogonappv1.firebaseio.com",
+    "project_id": "vlogonappv1",
+    "storage_bucket": "vlogonappv1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:274687615032:android:d534ab99d634cc9f",
+        "mobilesdk_app_id": "1:690808979353:android:c6b36b5f4ecffe63",
         "android_client_info": {
-          "package_name": "com.vlogonapp"
+          "package_name": "com.vlogonappv1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "274687615032-8udfbb6bocppv7took30vj1k15uv6rlf.apps.googleusercontent.com",
+          "client_id": "690808979353-al13cm9f33ja9rurb031k7sprelc2siu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vlogonapp",
+            "package_name": "com.vlogonappv1",
             "certificate_hash": "1f1900b71c504f99a5aebb69fcc26d35e023e527"
           }
         },
         {
-          "client_id": "274687615032-h502e4h4vql4s3u0t018cpihdlvg2mrf.apps.googleusercontent.com",
+          "client_id": "690808979353-tbi1l9l32sqbc1ot2uvbaca6udic2gdf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vlogonappv1",
+            "certificate_hash": "a740d54778522910eb1dc151ebdc2502b79dcf74"
+          }
+        },
+        {
+          "client_id": "690808979353-f3d3qhiudvn47ichvha3n2s48ja5flcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vlogonappv1",
+            "certificate_hash": "418d8d57b67101f6bbaa56302001171bd23769bd"
+          }
+        },
+        {
+          "client_id": "690808979353-v7jpikmpqicq28gdq6cq31o6lct6dvp5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDOztWn63SbD5a3pzv-bvD7-YZ4M9tjUIs"
+          "current_key": "AIzaSyC90ZhZr6j_vgn3w-CttNTV2Lw1TPIa4DM"
         }
       ],
       "services": {
@@ -40,7 +56,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "274687615032-h502e4h4vql4s3u0t018cpihdlvg2mrf.apps.googleusercontent.com",
+              "client_id": "690808979353-v7jpikmpqicq28gdq6cq31o6lct6dvp5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

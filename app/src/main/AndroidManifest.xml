@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.vlogonapp">
+          package="com.vlogonappv1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <application
-            android:name="com.vlogonapp.AppApplication"
+            android:name=".AppApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.vlogonapp.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".LoginActivity">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
+
+
         <activity
-                android:name="com.vlogonapp.MainActivity"
+                android:name=".MainActivity"
                 android:screenOrientation="portrait">
         </activity>
+
+
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity">
         </activity>
 
@@ -43,45 +45,52 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"
                 tools:replace="android:theme"/>
         <activity
-                android:name="com.vlogonapp.RegistrationActivity"
+                android:name=".RegistrationActivity"
                 android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ResumeActivity.AdvanceResumeActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".Twofactorverification.FirstStepMobileVerificationActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ResumeActivity.EducationActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ResumeActivity.ExperienceActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ResumeActivity.SkillsActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ResumeActivity.AchievementsActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".OtpVerificationActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ProfileActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".UserLoginActivity"
+                android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
-                android:name="com.vlogonapp.ResumeActivity.AdvanceResumeActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.ResumeActivity.EducationActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.ResumeActivity.ExperienceActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.ResumeActivity.SkillsActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.ResumeActivity.AchievementsActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.OtpVerificationActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.ProfileActivity"
-                android:screenOrientation="portrait">
-
-        </activity>
-        <activity
-                android:name="com.vlogonapp.UserLoginActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.vlogonapp.SelectCountryActivity"
+                android:name=".SelectCountryActivity"
                 android:screenOrientation="portrait">
         </activity>
 
@@ -96,19 +105,45 @@
         </provider>
 
         <activity
-                android:name="com.vlogonapp.FullscreenActivity"
+                android:name=".FullscreenActivity"
                 android:label="@string/title_activity_fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <data
-                        android:host="vlogin-0001.firebaseapp.com"
+                        android:host="vlogonappv1.firebaseapp.com"
                         android:scheme="https"/>
 
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+
+        <activity android:name=".Twofactorverification.EnterMobileNumberActivity">
+        </activity>
+        <activity android:name=".Twofactorverification.EmailAddressVerificationActivity">
+        </activity>
+
+        <activity
+            android:name=".BackupActivity"
+            android:screenOrientation="portrait">
+    </activity>
+
+
+
+        <receiver
+                android:name=".Service.AutoStart"
+                android:enabled="true"
+                android:exported="true" />
+
     </application>
 
 </manifest>

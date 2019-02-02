@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/chat_grey"
+        id="@+id/chat"
+        title="@string/chat"
+        />
+    <tab
+        icon="@drawable/share_grey"
+        id="@+id/share"
+        title="@string/share"
+        />
+    <tab
+
+        icon="@drawable/vault_grey"
+        id="@+id/vault"
+        title="@string/vault"
+        />
+    <tab
+        icon="@drawable/addressbook_grey"
+        id="@+id/addressbook"
+        title="@string/addressbook"
+        />
+    <tab
+            icon="@drawable/timeline_grey"
+            id="@+id/timeline"
+            title="@string/timeline"
+    />
+</tabs>

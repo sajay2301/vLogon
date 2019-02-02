@@ -356,7 +356,6 @@
                 </LinearLayout>
 
 
-
             </LinearLayout>
             <LinearLayout
 
@@ -475,6 +474,17 @@
                     android:layout_height="wrap_content"
 
                     android:text="@string/allowsendnewsoffer"
+            />
+
+            <CheckBox
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/checkBoxbackupandrestore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/backupandrestore"
             />
 
             <Button

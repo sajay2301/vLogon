@@ -26,6 +26,14 @@
         <b>Sign Up</b>
     </string>
 
+
+    <string name="signupregisterbyemail">Register By Email
+    </string>
+
+
+    <string name="socialregisterbyemail">Register By
+    </string>
+
     <string name="logintext">Have an account?
         <b>Log In</b>
     </string>
@@ -57,8 +65,12 @@
 
 
     <string name="skills">Skills</string>
-
-
+    <string name="action_backup">Backup</string>
+    <string name="action_backup_drive">Backup</string>
+    <string name="action_import">Import</string>
+    <string name="action_import_drive">Import from Drive</string>
+    <string name="action_clear_data">Clear All Data</string>
+    <string name="action_settings">Settings</string>
     <string-array name="dialog_items_choose_image">
         <item>@string/camera</item>
         <item>@string/gallery</item>
@@ -607,5 +619,117 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <string name="chat">Chat</string>
+    <string name="share">Share</string>
+    <string name="vault">Vault</string>
+    <string name="addressbook">Address Book</string>
+    <string name="timeline">Timeline</string>
+
+
+    <string name="activity_backup_drive_automatic">Automatic backup</string>
+    <string name="activity_backup_drive_desc">Backing up your data to Google Drive allows you to restore all your
+        readings in case you lose or change devices.
+    </string>
+    <string name="activity_backup_drive_message_restart">Restarting to apply changes...</string>
+    <string name="activity_backup_drive_desc_1">Sync Glucosio\'s database in the cloud with Google Drive.</string>
+    <string name="activity_backup_drive_desc_2">You\'ll be able to restore all your readings if you lost or change phone
+        or sync Glucosio\'s data between your devices.
+    </string>
+    <string name="activity_backup_drive_success">Database successfully backed up to Drive</string>
+    <string name="activity_backup_drive_restore_success">Successfully restored database from Drive</string>
+    <string name="activity_backup_drive_failed">Something went wrong. Please try again :/</string>
+    <string name="activity_backup_drive_last">Last backup:</string>
+    <string name="activity_backup_drive_folder">Google Drive</string>
+    <string name="activity_backup_drive_folder_not_set">Not set</string>
+    <string name="activity_backup_drive_button_backup">Backup now</string>
+    <string name="activity_backup_drive_recent">Recent backups</string>
+    <string name="activity_backup_drive_more">See more Backups</string>
+    <string name="activity_backup_drive_dialog_restore_title">Revert to previous version</string>
+    <string name="activity_backup_drive_dialog_restore_desc">Restoring the backup will overwrite all the existing data
+        with the backup.
+    </string>
+    <string name="activity_backup_drive_dialog_restore_details">Backup details</string>
+    <string name="activity_backup_drive_dialog_restore_button_cancel">Cancel</string>
+    <string name="activity_backup_drive_dialog_restore_button_restore">Restore backup</string>
+    <string name="activity_backup_drive_button_restore">Restore from Drive</string>
+    <string name="activity_backup_drive_error_restore">Unable to find a valid backup to restore from Drive</string>
+    <string name="activity_main_error_play_services">Glucosio needs Play Services to enable Google Drive backup.
+    </string>
+    <string name="activity_main_dialog_csv_title">Export to CSV file</string>
+    <string name="activity_backup_drive_button_open_drive">Manage on Drive</string>
+
+
+
+
+    <string name="source_google_drive">Google Drive </string>
+    <string name="start_drive">Start Google Drive</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log Out</string>
+    <string name="status_logged_out">Logged Out</string>
+    <string name="status_logged_in">Logged In</string>
+    <string name="status_user_cancelled">User Cancelled</string>
+    <string name="status_error">We found a problem: %1$s</string>
+    <string name="not_open_file">Could not open file</string>
+
+
+    <string name="camera_button_text">Upload</string>
+    <string name="sign_in_prompt">Sign In to begin</string>
+    <string name="take_photo_prompt">Upload a Photo</string>
+    <string name="download">Download</string>
+    <string name="sign_in_anonymously">Sign In</string>
+    <string name="rationale_storage">This sample reads images from your camera to demonstrate uploading.</string>
+    <string name="label_link">Link to Uploaded File</string>
+    <string name="label_download">Download File</string>
+    <string name="log_out">Log out</string>
+    <string name="success">Success</string>
+
+    <string name="progress_downloading">Downloading…</string>
+    <string name="progress_uploading">Uploading…</string>
+    <string name="progress_auth">Signing In…</string>
+
+    <string name="upload_success">Upload finished</string>
+    <string name="upload_failure">Upload failed</string>\
+
+    <string name="download_success">Download finished</string>
+    <string name="download_failure">Download failure</string>
+
+
+
+    <string name="download_progress">Download Progress:</string>
+    <string name="menu_settings">Settings</string>
+    <string name="button_subscribe">Listen for Changes</string>
+    <string name="button_unsubscribe">Stop Listening for Changes</string>
+    <string name="file_created">Created file: %1$s.</string>
+    <string name="file_create_error">Error while trying to create the file.</string>
+    <string name="select_folder">Select a folder</string>
+    <string name="select_file">Select file</string>
+    <string name="custom_property_deleted">Custom properties successfully deleted.</string>
+    <string name="update_failed">Unable to update file.</string>
+    <string name="change_event">File change event: %1$s</string>
+    <string name="tickle_finished">Finished tickling. Restart watch to resume.</string>
+    <string name="content_updated">Successfully edited contents.</string>
+    <string name="content_update_failed">Error while editing contents.</string>
+    <string name="metadata_updated">Successfully updated metadata.</string>
+    <string name="custom_property_updated">Custom property successfully inserted or updated.</string>
+    <string name="file_not_pinnable">File is not pinnable.</string>
+    <string name="file_already_pinned">File is already pinned.</string>
+    <string name="query_failed">Problem while retrieving files.</string>
+    <string name="read_failed">Error while retrieving file.</string>
+    <string name="metadata_retrieved">Metadata successfully fetched. Title: %1$s</string>
+    <string name="content_loaded">File contents successfully read.</string>
+    <string name="file_deleted">File deleted.</string>
+    <string name="delete_failed">Unable to delete file.</string>
+    <string name="subscribed">Subscribed.</string>
+    <string name="unsubscribed">Unsubscribed.</string>
+    <string name="init_failed">Unable to initialize activity.</string>
+    <string name="file_not_selected">No file selected, can not continue.</string>
+    <string name="folder_not_selected">No folder selected, can not continue.</string>
+
+
+    <string name="backupandrestore">Backup And Restore Setup</string>
+    <string name="dailybackup">Daily Backup</string>
 
 </resources>

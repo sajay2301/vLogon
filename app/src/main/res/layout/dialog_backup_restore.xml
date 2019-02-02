@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/transparent"
+              android:id="@+id/loginlayout"
+              android:orientation="vertical">
+
+
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+
+        android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:background="@drawable/white_rounded_corder"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+
+            android:paddingTop="@dimen/_15sdp">
+
+
+
+
+
+
+        <TextView
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_backup_drive_dialog_restore_title"
+                android:textColor="@color/glucosio_text_dark"
+                android:textSize="20sp" />
+
+        <TextView
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/activity_backup_drive_dialog_restore_desc" />
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+            <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/dialog_backup_restore_button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:text="@string/activity_backup_drive_dialog_restore_button_cancel"
+                    android:textColor="@color/glucosio_pink"
+                    android:textStyle="bold" />
+
+            <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/dialog_backup_restore_button_restore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:text="@string/activity_backup_drive_dialog_restore_button_restore"
+                    android:textColor="@color/glucosio_pink"
+                    android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+</LinearLayout>

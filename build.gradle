@@ -45,7 +45,7 @@ ext {
 
 
     // libs versions
-    supportVersion = '28.0.0'
+    supportVersion = '27.1.1'
     butterKnifeVersion = '8.8.1'
     retrofitVersion = '2.4.0'
     googlePlayVersion = '11.8.0'
