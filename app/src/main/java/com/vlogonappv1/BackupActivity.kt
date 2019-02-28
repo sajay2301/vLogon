@@ -25,9 +25,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.rxbinding2.view.clicks
-import com.vlogonappv1.Class.ProgressDialogshow
-import com.vlogonappv1.Service.Alarm
-import com.vlogonappv1.Twofactorverification.FirstStepMobileVerificationActivity
+import com.vlogonappv1.dataclass.ProgressDialogshow
+import com.vlogonappv1.service.Alarm
+import com.vlogonappv1.twofactorverification.FirstStepMobileVerificationActivity
 import com.vlogonappv1.backup.LocalBackup
 import com.vlogonappv1.backup.RemoteBackup
 import com.vlogonappv1.db.DBHelper

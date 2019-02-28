@@ -16,7 +16,7 @@ import android.content.res.TypedArray
 
 import android.widget.AdapterView
 import com.jakewharton.rxbinding2.view.clicks
-import com.vlogonappv1.Adapter.CountryListArrayAdapter
+import com.vlogonappv1.adapter.CountryListArrayAdapter
 import kotlinx.android.synthetic.main.activity_select_country.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
@@ -35,6 +35,7 @@ class SelectCountryActivity : AppCompatActivity() {
 
     companion object {
         var RESULT_CONTRYCODE = "countrycode"
+        var RESULT_CONTRYNAME= "countryname"
 
     }
 
@@ -65,6 +66,7 @@ class SelectCountryActivity : AppCompatActivity() {
             val c = countryList!!.get(position)
             val returnIntent = Intent()
             returnIntent.putExtra(RESULT_CONTRYCODE, c.code)
+            returnIntent.putExtra(RESULT_CONTRYNAME, c.name)
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }

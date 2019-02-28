@@ -1,19 +1,19 @@
 package com.vlogonappv1
 
-import android.Manifest
-import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.text.Editable
 import android.util.Base64
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.drive.Drive
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.TwitterAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.db.DBHelper
 import com.twitter.sdk.android.core.Callback
@@ -34,11 +35,13 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.Class.UserRegistrationClass
-
+import com.vlogonappv1.dataclass.ProgressDialogshow
+import com.vlogonappv1.dataclass.UserRegistrationClass
+import com.vlogonappv1.forgetpassword.ForgetPasswordActivity
 import kotlinx.android.synthetic.main.activity_user_login.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
+import kotlinx.android.synthetic.main.restoreforgetpasswordoptiondialog.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
@@ -61,18 +64,30 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
     val list: ArrayList<String> = ArrayList()
     var firebaseAuth: FirebaseAuth? = null
     lateinit var twitterSignInButton: TwitterLoginButton
+    lateinit var Firestoredb: FirebaseFirestore
+    var passwordencodedKey: String = ""
+    internal var flag = 0
+    companion object {
+
+        var forgetoptiondialog: Dialog? = null
+
+
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
         if (!mSessionHolder.User_Login.isEmpty()) {
+
             val intent = Intent(this@UserLoginActivity, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.enter, R.anim.exit)
             finish()
+
         }
         db = DBHelper(applicationContext)
-
+        Firestoredb = FirebaseFirestore.getInstance()
         toolbar?.apply {
 
             tvToolbarTitle.text = "Log In"
@@ -107,7 +122,7 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
                     Toast.LENGTH_SHORT
                 ).show()
             }else {
-                getTasks()
+                UserLogin(etemailid.getText().toString(),etpassword.getText().toString())
             }
             }
 
@@ -135,12 +150,7 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
 
 
 
-        if (!mSessionHolder.User_Login.isEmpty()) {
-            val intent = Intent(this@UserLoginActivity, MainActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.enter, R.anim.exit)
-            finish()
-        }
+
 
 
 
@@ -241,6 +251,19 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
         }
 
         Permissions.verifyStoragePermissions(this@UserLoginActivity)
+
+
+        txtforgetpassword.clicks().subscribe {
+          /*  forgetoptiondialog = ForgetPasswordOptionDialog(
+                this@UserLoginActivity
+            )
+            forgetoptiondialog!!.show()*/
+            mSessionHolder.User_ActivityName=""
+            val intent = Intent(this@UserLoginActivity, ForgetPasswordActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.enter, R.anim.exit)
+
+        }
     }
     private fun getTasks() {
         class GetTasks : AsyncTask<Void, Void, List<UserRegistrationClass>>() {
@@ -495,27 +518,119 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
         return mIntent != null
     }
 
-    fun verifyStoragePermissions(activity: Activity) {
 
-        val REQUEST_EXTERNAL_STORAGE = 1
-        val PERMISSIONS_STORAGE = arrayOf<String>(
 
-            //Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    fun ForgetPasswordOptionDialog(context: Context): Dialog {
+
+        var option: String = ""
+
+        val inflate = LayoutInflater.from(context).inflate(R.layout.restoreforgetpasswordoptiondialog, null)
+        val optiondialog = Dialog(context)
+        optiondialog.setContentView(inflate)
+        optiondialog.setCancelable(false)
+        optiondialog.window!!.setBackgroundDrawable(
+            ColorDrawable(Color.TRANSPARENT)
         )
+        val window = optiondialog.window
+        val wlp = window.attributes
+        wlp.gravity = Gravity.CENTER
+        window.attributes = wlp
+        optiondialog.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
 
-        val permission = ActivityCompat.checkSelfPermission(
-            activity,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                activity,
-                PERMISSIONS_STORAGE,
-                REQUEST_EXTERNAL_STORAGE
-            )
+        optiondialog.forgetbuttoncancel.clicks().subscribe {
+            optiondialog.dismiss()
         }
+        optiondialog.radioforgetoption?.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.radiomobile -> option = "mobile"
+                R.id.radioemail -> option = "email"
+
+            }
+        }
+
+        optiondialog.buttonoksubmit.clicks().subscribe {
+
+            optiondialog.dismiss()
+
+            if (option.equals("mobile")) {
+
+                val intent = Intent(this@UserLoginActivity, ForgetPasswordActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.enter, R.anim.exit)
+
+
+            } else {
+                mSessionHolder.User_ActivityName=""
+                val intent = Intent(this@UserLoginActivity, ForgetPasswordActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.enter, R.anim.exit)
+            }
+
+        }
+
+
+
+        optiondialog.setOnKeyListener { dialog, keyCode, event ->
+
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                optiondialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+
+
+        return optiondialog
+    }
+
+    private fun UserLogin(emailid: String, password: String) {
+
+
+        passwordencodedKey = String(Base64.encode(password.toByteArray(), 0))
+
+        flag=0
+        dialog = ProgressDialogshow.progressDialog(this@UserLoginActivity)
+        dialog.show()
+        Firestoredb.collection("RegisterUser").whereEqualTo("Primary Email", emailid)
+            .whereEqualTo("Password", passwordencodedKey)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        //  Log.e("data", document.getId() + " => " + document.get("name"));
+                        flag = 1
+                        mSessionHolder.USER_ID = document.id
+                        mSessionHolder.User_Login = document.get("Primary Email").toString()
+                        mSessionHolder.Source_login = document.get("Source").toString()
+                        mSessionHolder.User_Mobilenumber=document.get("Mobile Number").toString()
+                        mSessionHolder.User_Countrycode=document.get("Countrycode").toString()
+                        mSessionHolder.User_Password=document.get("Password").toString()
+
+
+                    }
+                    if (flag == 0) {
+                        Toast.makeText(this@UserLoginActivity, "Username or Password Is Incorrect", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+
+
+                    } else {
+                        Toast.makeText(applicationContext, "Login Successfully", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@UserLoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        overridePendingTransition(R.anim.enter, R.anim.exit)
+                        finish()
+
+                    }
+                } else {
+                    dialog.dismiss()
+                    Log.e("dasd", "Error getting documents.", task.exception)
+                }
+            }
+
+
     }
 
 }

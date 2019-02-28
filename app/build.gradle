@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
 
 ext {
     play_services_version = "15.0.1"
@@ -11,7 +9,7 @@ ext {
 }
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.vlogonappv1"
         minSdkVersion 16
@@ -98,8 +96,8 @@ dependencies {
     compile('com.twitter.sdk.android:twitter:3.1.1@aar') {
         transitive = true
     }
-    compile 'com.twitter.sdk.android:twitter-core:3.1.0'
-
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.0'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     // Google Drive
 
 
@@ -109,8 +107,13 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-auth:15.0.0"
     implementation "com.google.android.gms:play-services-drive:15.0.0"
-
     implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'me.dm7.barcodescanner:zbar:1.9.3'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.3'
+    implementation 'joda-time:joda-time:2.10.1'
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.10.5'
+    implementation 'cat.ereza:customactivityoncrash:2.2.0'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

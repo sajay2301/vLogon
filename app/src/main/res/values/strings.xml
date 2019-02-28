@@ -662,9 +662,7 @@
     <string name="activity_backup_drive_button_open_drive">Manage on Drive</string>
 
 
-
-
-    <string name="source_google_drive">Google Drive </string>
+    <string name="source_google_drive">Google Drive</string>
     <string name="start_drive">Start Google Drive</string>
     <string name="login">Log In</string>
     <string name="logout">Log Out</string>
@@ -695,7 +693,6 @@
 
     <string name="download_success">Download finished</string>
     <string name="download_failure">Download failure</string>
-
 
 
     <string name="download_progress">Download Progress:</string>
@@ -732,4 +729,27 @@
     <string name="backupandrestore">Backup And Restore Setup</string>
     <string name="dailybackup">Daily Backup</string>
 
+
+    <!-- These strings are only for our CUSTOM error activity, if you are using the default activity, they are not needed! -->
+    <string name="error_title">Something went wrong!</string>
+    <string name="error_occurred">An error occurred. We\'re deeply sorry.</string>
+    <string name="error_details">Error details:</string>
+    <string name="unknown_exception">Unknown exception</string>
+    <string name="restart_app">Restart app</string>
+    <string name="close_app">Close app</string>
+    <string name="import_contacts">Import contacts</string>
+
+
+    <string name="label_closed_on">Closed On</string>
+    <string name="label_call_us">Call Us</string>
+    <string name="label_rate">Message</string>
+    <string name="label_inquiry">Block</string>
+    <string name="label_favorite">Share</string>
+    <string name="label_save_contact">Share</string>
+
+    <string name="autofocus_on">Autofocus activated</string>
+    <string name="autofocus_off">Autofocus deactivated</string>
+    <string name="label_share_contact_using">Share Contact Using...</string>
+    <string name="label_name">Name</string>
+    <string name="label_contact_number">CONTACT NUMBER</string>
 </resources>

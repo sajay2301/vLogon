@@ -30,7 +30,19 @@
                 android:orientation="vertical"
                 >
 
-
+                <TextView
+                        android:id="@+id/txt_collageplusyear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left|center_vertical"
+                        android:textColor="@color/black"
+                        android:text=""
+                        android:textSize="14dp"
+                />
 
                 <TextView
                     android:id="@+id/txt_degree"
@@ -41,7 +53,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:gravity="left|center_vertical"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/fontGray"
                     android:text=""
                     android:textSize="14dp"
                      />
@@ -53,26 +65,14 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="5dp"
+
                         android:gravity="left|center_vertical"
                         android:textColor="@color/fontGray"
                         android:text=""
                         android:textSize="14dp"
                         />
 
-                <TextView
-                        android:id="@+id/txt_collageplusyear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="left|center_vertical"
-                        android:textColor="@color/fontGray"
-                        android:text=""
-                        android:textSize="14dp"
-                         />
+
 
 
             </LinearLayout>

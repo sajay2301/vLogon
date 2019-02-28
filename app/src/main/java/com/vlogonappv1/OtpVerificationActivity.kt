@@ -1,9 +1,13 @@
 package com.vlogonappv1
 
 import android.app.Dialog
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AppCompatActivity
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,17 +19,23 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.jakewharton.rxbinding2.view.clicks
 
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.Class.ProgressDialogshow
-import com.vlogonappv1.Class.UserRegistrationClass
+import com.vlogonappv1.dataclass.CodeGenerator
+import com.vlogonappv1.dataclass.ProgressDialogshow
+import com.vlogonappv1.dataclass.UserRegistrationClass
 import com.vlogonappv1.db.DBHelper
 import kotlinx.android.synthetic.main.activity_otp_verification.*
-import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import org.jetbrains.anko.startActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.util.HashMap
 
 
 import java.util.concurrent.TimeUnit
@@ -55,10 +65,19 @@ class OtpVerificationActivity : AppCompatActivity() {
     private var source: String? = null
     private var countrycode: String? = null
 
+    private var username: String? = null
+    private var birthdate: String? = null
+    private var location: String? = null
+    private var additionalnumber: String? = null
+
+    private var filenameqrcode: String? = null
+    lateinit var storage: FirebaseStorage
+    lateinit var storageRef: StorageReference
+    internal var downloadUrl = ""
 
     private var db: DBHelper? = null
-
-
+    lateinit var Firestoredb: FirebaseFirestore
+    var passwordencodedKey: String = ""
     private val mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
 
@@ -94,7 +113,7 @@ class OtpVerificationActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         val i = intent.extras
-
+        Firestoredb = FirebaseFirestore.getInstance()
 
         firstname = i!!.getString("firstname")
         lastname = i!!.getString("lastname")
@@ -105,7 +124,19 @@ class OtpVerificationActivity : AppCompatActivity() {
         profilepic = i!!.getString("profilepic")
         source = i!!.getString("source")
         countrycode = i!!.getString("countrycode")
+        username = i!!.getString("username")
+        birthdate = i!!.getString("birthdate")
+        location = i!!.getString("location")
+        additionalnumber = i!!.getString("additionalnumber")
 
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.getReferenceFromUrl("gs://vlogonappv1.appspot.com/vlogonapp")
+
+        generateCode(username.toString())
+        if(countrycode.equals("+91"))
+        {
+            location="India"
+        }
 
 
         editTextCode = findViewById<View>(R.id.enterotp) as EditText
@@ -145,14 +176,28 @@ class OtpVerificationActivity : AppCompatActivity() {
 
 
         }
-
-
-
-
-
     }
 
+    private fun generateCode(input: String) {
+        val codeGenerator = CodeGenerator()
+        codeGenerator.generateQRFor(input)
 
+        codeGenerator.setResultListener(object : CodeGenerator.ResultListener {
+          override  fun onResult(bitmap: Bitmap) {
+                //((BitmapDrawable)outputBitmap.getDrawable()).getBitmap().recycle();
+
+
+
+              filenameqrcode= saveImageFile(bitmap,input)
+
+
+
+              Log.e("filenameqrcode",filenameqrcode.toString())
+
+            }
+        })
+        codeGenerator.execute()
+    }
     private fun sendVerificationCode(mobile: String?) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             mobile!!,
@@ -182,9 +227,9 @@ class OtpVerificationActivity : AppCompatActivity() {
             .addOnCompleteListener(this@OtpVerificationActivity) { task ->
                 if (task.isSuccessful) {
                     //verification successful we will start the profile activity
-                    saveTask()
-                    dialog.dismiss()
 
+                    dialog.dismiss()
+                    UploadImageFileToFirebaseStorage()
 
                 } else {
 
@@ -196,6 +241,65 @@ class OtpVerificationActivity : AppCompatActivity() {
                 }
             }
     }
+
+    fun UploadImageFileToFirebaseStorage() {
+
+        dialog = ProgressDialogshow.progressDialog(this@OtpVerificationActivity)
+        dialog.show()
+
+
+        val file = File(filenameqrcode!!)
+        val picurl = Uri.fromFile(file)
+        val childRef = storageRef.child(picurl.lastPathSegment!!)
+        //uploading the image
+        val uploadTask = childRef.putFile(picurl)
+
+
+
+
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            dialog.dismiss()
+            val urlTask = taskSnapshot.storage.downloadUrl
+            while (!urlTask.isSuccessful);
+
+            val imageurl = urlTask.result
+            downloadUrl = imageurl.toString()
+            UserRegister()
+        }.addOnFailureListener { e ->
+            dialog.dismiss()
+            Toast.makeText(this@OtpVerificationActivity, "Upload Failed -> $e", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun saveImageFile(bitmap: Bitmap, fileName: String): String {
+        var out: FileOutputStream? = null
+        val filePath = getFilename(fileName)
+
+
+
+        try {
+            out = FileOutputStream(filePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return filePath
+    }
+    private fun getFilename(fileName: String): String {
+        var fileName = fileName
+        val file = File(Environment.getExternalStorageDirectory().toString() + File.separator + resources.getString(R.string.app_name))
+
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        if (fileName.contains("/")) {
+            fileName = fileName.replace("/", "\\")
+        }
+        return file.absolutePath + "/" + fileName + ".png"
+    }
+
 
 
     private fun saveTask() {
@@ -291,5 +395,99 @@ class OtpVerificationActivity : AppCompatActivity() {
 
 
     }
+
+
+
+    private fun UserRegister() {
+
+
+        passwordencodedKey = String(Base64.encode(password.toString().toByteArray(), 0))
+
+        dialog = ProgressDialogshow.progressDialog(this@OtpVerificationActivity)
+        dialog.show()
+        val setuserinfo = HashMap<String, Any>()
+        setuserinfo["UserName"] =  username.toString()
+        setuserinfo["Firstname"] = firstname.toString()
+        setuserinfo["Lastname"] = lastname.toString()
+        setuserinfo["Mobile Number"] = MobileNumber.toString()
+        setuserinfo["Primary Email"] = personalemail.toString()
+        setuserinfo["BirthDate"] = birthdate.toString()
+        setuserinfo["Location"] = location.toString()
+        setuserinfo["Password"] = passwordencodedKey
+        setuserinfo["OfficeEmail"] = officeemail.toString()
+        setuserinfo["ProfilePic"] = profilepic.toString()
+        setuserinfo["Source"] = source.toString()
+        setuserinfo["Countrycode"] = countrycode.toString()
+        setuserinfo["AdditionalNumber"] = additionalnumber.toString()
+
+        setuserinfo["Gender"] = ""
+        setuserinfo["City"] =""
+        setuserinfo["Country"] = ""
+        setuserinfo["Address"] = ""
+        setuserinfo["qrcodelink"] = downloadUrl
+
+
+
+
+
+
+
+        Firestoredb.collection("RegisterUser")
+            .add(setuserinfo)
+            .addOnSuccessListener {
+
+                dialog.dismiss()
+                db = DBHelper(applicationContext)
+
+                val userdata = UserRegistrationClass()
+                userdata.username = username.toString()
+                userdata.firstname = firstname.toString()
+                userdata.lastname = lastname.toString()
+                userdata.mobilenumber = MobileNumber.toString()
+                userdata.birthdate = birthdate.toString()
+
+                userdata.personalemail = personalemail.toString()
+                userdata.additionalnumber = additionalnumber.toString()
+                userdata.officeemail = officeemail.toString()
+                userdata.password = password.toString()
+                userdata.profilepic = profilepic.toString()
+                userdata.source = source.toString()
+                userdata.gender = ""
+                userdata.address = ""
+                userdata.city = ""
+                userdata.country = ""
+                userdata.countrycode =countrycode.toString()
+
+                val id_db = db!!.addUserRegistration(userdata)
+
+                mSessionHolder.User_Login=personalemail.toString()
+                mSessionHolder.Source_login=source.toString()
+                mSessionHolder.User_Mobilenumber=MobileNumber.toString()
+                mSessionHolder.User_Countrycode=countrycode.toString()
+                mSessionHolder.User_Password=passwordencodedKey
+
+                if(mSessionHolder.Source_login.equals("google"))
+                {
+
+                    AppApplication.mSessionHolder.accountname= mSessionHolder.User_Login
+                    AppApplication.mSessionHolder.setonnotset= "set"
+                }
+
+                db!!.closeDB()
+                startActivity<MainActivity>()
+                finish();
+                Toast.makeText(applicationContext, "Successfully Register", Toast.LENGTH_LONG).show()
+
+            }
+            .addOnFailureListener { e ->
+                Log.e("addded", "Error adding Register", e)
+                Toast.makeText(
+                    this@OtpVerificationActivity,
+                    "Register User could not be added",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
 
 }

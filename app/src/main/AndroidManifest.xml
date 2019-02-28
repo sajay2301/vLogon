@@ -10,7 +10,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
     <application
             android:name=".AppApplication"
@@ -20,17 +22,27 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
-
+        <activity android:name=".contactlist.BlockContactActivity">
         </activity>
+        <activity android:name=".contactlist.ScanQrCodeActivity">
+        </activity>
+        <activity
+                android:name=".UserLoginActivity"
+                android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".LoginActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <activity
                 android:name=".MainActivity"
                 android:screenOrientation="portrait">
         </activity>
-
-
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity">
         </activity>
 
@@ -49,27 +61,27 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ResumeActivity.AdvanceResumeActivity"
+                android:name=".resumeactivity.AdvanceResumeActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Twofactorverification.FirstStepMobileVerificationActivity"
+                android:name=".twofactorverification.FirstStepMobileVerificationActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ResumeActivity.EducationActivity"
+                android:name=".resumeactivity.EducationActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ResumeActivity.ExperienceActivity"
+                android:name=".resumeactivity.ExperienceActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ResumeActivity.SkillsActivity"
+                android:name=".resumeactivity.SkillsActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ResumeActivity.AchievementsActivity"
+                android:name=".resumeactivity.AchievementsActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
@@ -79,15 +91,6 @@
         <activity
                 android:name=".ProfileActivity"
                 android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name=".UserLoginActivity"
-                android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".SelectCountryActivity"
@@ -106,7 +109,8 @@
 
         <activity
                 android:name=".FullscreenActivity"
-                android:label="@string/title_activity_fullscreen">
+                android:label="@string/title_activity_fullscreen"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -118,32 +122,37 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
-
-        <activity android:name=".Twofactorverification.EnterMobileNumberActivity">
-        </activity>
-        <activity android:name=".Twofactorverification.EmailAddressVerificationActivity">
-        </activity>
 
         <activity
-            android:name=".BackupActivity"
-            android:screenOrientation="portrait">
-    </activity>
-
-
+                android:name=".twofactorverification.EnterMobileNumberActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".twofactorverification.EmailAddressVerificationActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".forgetpassword.ForgetPasswordActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".BackupActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".CustomErrorActivity"
+                android:label="@string/error_title"
+                android:process=":error_activity"/>
 
         <receiver
-                android:name=".Service.AutoStart"
+                android:name=".service.AutoStart"
                 android:enabled="true"
-                android:exported="true" />
+                android:exported="true"/>
 
+        <activity android:name=".contactlist.AddressBookActivity">
+        </activity>
+        <activity android:name=".contactlist.AddContactActivity">
+        </activity>
     </application>
 
 </manifest>

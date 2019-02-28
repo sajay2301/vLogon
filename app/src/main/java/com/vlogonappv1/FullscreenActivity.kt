@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.google.firebase.auth.FirebaseAuth
-import com.vlogonappv1.Twofactorverification.EmailAddressVerificationActivity
-import java.nio.file.Files.createFile
+import com.vlogonappv1.twofactorverification.EmailAddressVerificationActivity
 
-import com.google.android.gms.tasks.Tasks
-
+import com.vlogonappv1.forgetpassword.ForgetPasswordActivity
 
 
 /**
@@ -57,7 +55,16 @@ class FullscreenActivity : AppCompatActivity() {
                 startActivity(intent)
                 finishAffinity()
                 finish()
-            }else
+            }else if(AppApplication.mSessionHolder.User_ActivityName.equals("forgetpasswordemailscreen"))
+            {
+                val intent = Intent(this@FullscreenActivity, ForgetPasswordActivity::class.java)
+                intent.putExtra("emaillink", emailLink)
+                overridePendingTransition(R.anim.enter, R.anim.exit)
+                startActivity(intent)
+                finishAffinity()
+                finish()
+            }
+            else
             {
                 val intent = Intent(this@FullscreenActivity, EmailAddressVerificationActivity::class.java)
                 intent.putExtra("emaillink", emailLink)

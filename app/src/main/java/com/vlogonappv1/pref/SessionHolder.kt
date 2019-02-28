@@ -11,16 +11,21 @@ class SessionHolder(val pref: SharedPreferences) {
     var Source_login : String by pref.prefString("")
     var USER_LAT : Long by pref.prefLong(0L)
     var USER_LNG : Long by pref.prefLong(0L)
-    var USER_ID : Int by pref.prefInt(0)
+    var USER_ID : String by pref.prefString("")
 
     var Login_id : String by pref.prefString("")
     var Login_Password :String by pref.prefString("")
 
-
+    var User_name : String by pref.prefString("")
     var User_Firstname : String by pref.prefString("")
     var User_Lastname : String by pref.prefString("")
     var User_Countrycode : String by pref.prefString("")
     var User_Mobilenumber : String by pref.prefString("")
+    var User_AdditionalNumber : String by pref.prefString("")
+    var User_Location : String by pref.prefString("")
+
+    var User_Birthdate : String by pref.prefString("")
+
     var User_PersonalEmailId :String by pref.prefString("")
     var User_OfficeEmailId :String by pref.prefString("")
     var User_termandcondition :Boolean by pref.prefBoolean(false)

@@ -20,11 +20,8 @@ package com.vlogonappv1.backup
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.content.IntentSender
-import android.os.ParcelFileDescriptor
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -32,16 +29,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.drive.*
-import com.google.android.gms.drive.query.Filters
-import com.google.android.gms.drive.query.Query
-import com.google.android.gms.drive.query.SearchableField
 import com.google.android.gms.tasks.*
 import com.vlogonappv1.AppApplication
-import com.vlogonappv1.Class.ProgressDialogshow
-import com.vlogonappv1.db.DBHelper.Companion.DATABASE_NAME
 
-import java.io.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 

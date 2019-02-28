@@ -1,38 +1,58 @@
 package com.vlogonappv1
 
-import android.app.Activity
-import android.app.Dialog
+import android.app.*
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
+import android.support.v7.app.AlertDialog
+
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.Class.ProgressDialogshow
+import com.vlogonappv1.dataclass.ProgressDialogshow
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.CollectionReference
+import com.vlogonappv1.spinnerdatepicker.SpinnerDatePickerDialogBuilder
+import java.util.*
+import com.vlogonappv1.spinnerdatepicker.DatePicker
+import com.vlogonappv1.spinnerdatepicker.DatePickerDialog
+
+class RegistrationActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
+    override fun onDateSet(
+        view: DatePicker?,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
+        var fm = "" + (monthOfYear +1)
+        var fd = "" + dayOfMonth
+        if((monthOfYear+1)<10){
+            fm = "0"+(monthOfYear +1)
+        }
+        if (dayOfMonth<10){
+            fd="0"+dayOfMonth
+        }
+        etbirthdate.text = "$fd/$fm/$year"
+    }
 
 
 
-
-
-
-class RegistrationActivity : AppCompatActivity() {
 
     private var mVerificationId: String? = null
     private var emaillogin: String? = null
@@ -46,9 +66,11 @@ class RegistrationActivity : AppCompatActivity() {
     var allowsendnewsoffer: Boolean = false
     private var pendingEmail: String = ""
     private var emailLink: String = ""
+    private var location: String = ""
     private lateinit var auth: FirebaseAuth
     lateinit var dialog: Dialog
-
+    internal var flag = 0
+    lateinit var Firestoredb: FirebaseFirestore
     companion object {
         private const val TAG = "PasswordlessSignIn"
         private const val KEY_PENDING_EMAIL = "key_pending_email"
@@ -74,6 +96,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
         auth = FirebaseAuth.getInstance()
         val i = intent.extras
+        Firestoredb = FirebaseFirestore.getInstance()
 
         emaillogin = i!!.getString("emaillogin")
         source = i.getString("source")
@@ -105,6 +128,11 @@ class RegistrationActivity : AppCompatActivity() {
 
                     mSessionHolder.User_EmailSource = emaillogin.toString()
                     mSessionHolder.User_LoginSource = source.toString()
+
+                    mSessionHolder.User_name = etusername.text.toString()
+                    mSessionHolder.User_Birthdate = etbirthdate.text.toString()
+                    mSessionHolder.User_Location =location.toString()
+                    mSessionHolder.User_AdditionalNumber = etadditionalnumber.text.toString()
 
                     mSessionHolder.User_termandcondition = termandcondition
                     mSessionHolder.User_allowoffer = allowsendnewsoffer
@@ -151,6 +179,12 @@ class RegistrationActivity : AppCompatActivity() {
                 etpassword.text = Editable.Factory.getInstance().newEditable(mSessionHolder.User_Password)
                 etconfirmpassword.text = Editable.Factory.getInstance().newEditable(mSessionHolder.User_ConfirmPassword)
 
+                etbirthdate.text = mSessionHolder.User_Birthdate
+                etusername.text = Editable.Factory.getInstance().newEditable(mSessionHolder.User_name)
+                etadditionalnumber.text = Editable.Factory.getInstance().newEditable(mSessionHolder.User_AdditionalNumber)
+                location=mSessionHolder.User_Location
+
+
                 emaillogin = mSessionHolder.User_EmailSource
                 source = mSessionHolder.User_LoginSource
 
@@ -194,6 +228,11 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
 
+        addmobilebutton.clicks().subscribe {
+            enterAdditionalnumber()
+
+        }
+
 
         officeemailverify.clicks().subscribe {
             val email = etofficeemail.text.toString()
@@ -218,6 +257,12 @@ class RegistrationActivity : AppCompatActivity() {
                 mSessionHolder.User_OfficeEmailId = etofficeemail.text.toString()
                 mSessionHolder.User_PersonalEmailId = etpersonalemail.text.toString()
 
+
+                mSessionHolder.User_Birthdate = etbirthdate.text.toString()
+                mSessionHolder.User_Location =location.toString()
+                mSessionHolder.User_AdditionalNumber = etadditionalnumber.text.toString()
+                mSessionHolder.User_name = etusername.text.toString()
+
                 mSessionHolder.User_EmailSource = emaillogin.toString()
                 mSessionHolder.User_LoginSource = source.toString()
 
@@ -238,8 +283,13 @@ class RegistrationActivity : AppCompatActivity() {
 
             if (emaillogin.equals("true")) {
 
-
-                if (etfisrtname.text.toString().isEmpty()) {
+                if (etusername.text.toString().isEmpty()) {
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please Enter User Name",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (etfisrtname.text.toString().isEmpty()) {
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please Enter First Name",
@@ -258,7 +308,15 @@ class RegistrationActivity : AppCompatActivity() {
                         "Please Enter Phone Number",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if (etpersonalemail.text.toString().isEmpty()) {
+                }else if (etbirthdate.text.toString().isEmpty()) {
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please Select Birth Date",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+                else if (etpersonalemail.text.toString().isEmpty()) {
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please Enter Personal Email",
@@ -308,47 +366,23 @@ class RegistrationActivity : AppCompatActivity() {
                     } else {
 
 
-                        mSessionHolder.User_Firstname = ""
-                        mSessionHolder.User_Lastname = ""
-                        mSessionHolder.User_Countrycode = ""
-                        mSessionHolder.User_Mobilenumber = ""
-                        mSessionHolder.User_OfficeEmailId = ""
-                        mSessionHolder.User_PersonalEmailId = ""
 
-                        mSessionHolder.User_EmailSource = ""
-                        mSessionHolder.User_LoginSource = ""
 
-                        mSessionHolder.User_termandcondition = false
-                        mSessionHolder.User_allowoffer = false
-
-                        mSessionHolder.User_Password = ""
-                        mSessionHolder.User_ConfirmPassword = ""
-                        mSessionHolder.User_VerifyEmailId = ""
-                        mSessionHolder.User_personalcolorcode = ""
-                        mSessionHolder.User_officecolorcode = ""
-                        mSessionHolder.User_ActivityName=""
-
-                        val intent = Intent(this@RegistrationActivity, OtpVerificationActivity::class.java)
-
-                        intent.putExtra("firstname", etfisrtname.text.toString())
-                        intent.putExtra("lastname", etlastname.text.toString())
-                        intent.putExtra("mobilenumber", etmobilenumber.text.toString())
-                        intent.putExtra("countrycode", selectcountrycode.text.toString())
-                        intent.putExtra("personalemail", etpersonalemail.text.toString())
-                        intent.putExtra("officeemail", etofficeemail.text.toString())
-                        intent.putExtra("password", etpassword.text.toString())
-                        intent.putExtra("profilepic", "")
-                        intent.putExtra("source", "email")
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.enter, R.anim.exit)
-                        finish()
+                        CheckUserisExistornot()
                     }
 
 
                 }
 
             } else {
-                if (etfisrtname.text.toString().isEmpty()) {
+
+                if (etusername.text.toString().isEmpty()) {
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please Enter User Name",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (etfisrtname.text.toString().isEmpty()) {
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please Enter First Name",
@@ -367,7 +401,15 @@ class RegistrationActivity : AppCompatActivity() {
                         "Please Enter Phone Number",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if (etpersonalemail.text.toString().isEmpty()) {
+                } else if (etbirthdate.text.toString().isEmpty()) {
+                    Toast.makeText(
+                        this@RegistrationActivity,
+                        "Please Select Birth Date",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+                else if (etpersonalemail.text.toString().isEmpty()) {
                     Toast.makeText(
                         this@RegistrationActivity,
                         "Please Enter Personal Email",
@@ -406,40 +448,17 @@ class RegistrationActivity : AppCompatActivity() {
 
                         ).show()
                     } else {
-                        mSessionHolder.User_Firstname = ""
-                        mSessionHolder.User_Lastname = ""
-                        mSessionHolder.User_Countrycode = ""
-                        mSessionHolder.User_Mobilenumber = ""
-                        mSessionHolder.User_OfficeEmailId = ""
-                        mSessionHolder.User_PersonalEmailId = ""
 
-                        mSessionHolder.User_EmailSource = ""
-                        mSessionHolder.User_LoginSource = ""
 
-                        mSessionHolder.User_termandcondition = false
-                        mSessionHolder.User_allowoffer = false
 
-                        mSessionHolder.User_Password = ""
-                        mSessionHolder.User_ConfirmPassword = ""
-                        mSessionHolder.User_VerifyEmailId = ""
-                        mSessionHolder.User_personalcolorcode = ""
-                        mSessionHolder.User_officecolorcode = ""
-                        mSessionHolder.User_ActivityName=""
 
-                        val intent = Intent(this@RegistrationActivity, OtpVerificationActivity::class.java)
 
-                        intent.putExtra("firstname", etfisrtname.text.toString())
-                        intent.putExtra("lastname", etlastname.text.toString())
-                        intent.putExtra("mobilenumber", etmobilenumber.text.toString())
-                        intent.putExtra("countrycode", selectcountrycode.text.toString())
-                        intent.putExtra("personalemail", etpersonalemail.text.toString())
-                        intent.putExtra("officeemail", etofficeemail.text.toString())
-                        intent.putExtra("password", etpassword.text.toString())
-                        intent.putExtra("profilepic", profilepic.toString())
-                        intent.putExtra("source", source.toString())
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.enter, R.anim.exit)
-                        finish()
+
+                        CheckUserisExistornot()
+
+
+
+
                     }
                 }
 
@@ -457,7 +476,33 @@ class RegistrationActivity : AppCompatActivity() {
             finish()
         }
 
+        etbirthdate.clicks().subscribe{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
 
+
+        /*    val dpd = DatePickerDialog(this@RegistrationActivity, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                // Display Selected date in textbox
+
+                var fm = "" + (month +1)
+                var fd = "" + dayOfMonth
+                if((month+1)<10){
+                    fm = "0"+(month +1)
+                }
+                if (dayOfMonth<10){
+                    fd="0"+dayOfMonth
+                }
+                etbirthdate.text = "$fd/$fm/$year"
+
+            }, year, month, day)
+
+            dpd.show()*/
+            showDate(year, month, day, R.style.DatePickerSpinner)
+
+        }
 
         // Check if the Intent that started the Activity contains an email sign-in link.
       //  checkIntent(intent)
@@ -471,7 +516,7 @@ class RegistrationActivity : AppCompatActivity() {
         {
 
             try {
-                emailLink = i!!.getString("emaillink")
+                emailLink = i.getString("emaillink")
 
 
                 // Log.e("emailLink",emailLink)
@@ -525,7 +570,16 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
-
+    @VisibleForTesting
+    internal fun showDate(year: Int, monthOfYear: Int, dayOfMonth: Int, spinnerTheme: Int) {
+        SpinnerDatePickerDialogBuilder()
+            .context(this@RegistrationActivity)
+            .callback(this)
+            .spinnerTheme(spinnerTheme)
+            .defaultDate(year, monthOfYear, dayOfMonth)
+            .build()
+            .show()
+    }
   /*  private fun saveTask() {
 
         class SaveTask : AsyncTask<String, Int, String>() {
@@ -615,7 +669,33 @@ class RegistrationActivity : AppCompatActivity() {
         val st = SaveTask()
         st.execute()
     }*/
+  fun enterAdditionalnumber() {
 
+
+      val builder = AlertDialog.Builder(this@RegistrationActivity)
+      builder.setTitle("Enter Additional Number")
+      val input = EditText(this@RegistrationActivity)
+      input.inputType = InputType.TYPE_CLASS_NUMBER
+      builder.setView(input)
+      builder.setPositiveButton("Ok") { dialog, which ->
+          val m_Text = input.text.toString()
+
+          if(etadditionalnumber.text.toString() == "") {
+              etadditionalnumber.text = Editable.Factory.getInstance().newEditable(m_Text)
+          }else
+          {
+              var getnumber=etadditionalnumber.text.toString()
+              etadditionalnumber.text = Editable.Factory.getInstance().newEditable("$getnumber,$m_Text")
+          }
+
+
+
+      }
+      builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+
+      builder.show()
+
+  }
     fun isValidPassword(password: String): Boolean {
 
         val pattern: Pattern
@@ -625,6 +705,8 @@ class RegistrationActivity : AppCompatActivity() {
         matcher = pattern.matcher(password)
 
         return matcher.matches()
+
+
 
     }
 
@@ -691,16 +773,152 @@ class RegistrationActivity : AppCompatActivity() {
         mSessionHolder.User_officecolorcode = ""
         mSessionHolder.User_ActivityName=""
 
-
+        mSessionHolder.User_Birthdate = ""
+        mSessionHolder.User_Location =""
+        mSessionHolder.User_AdditionalNumber =""
+        mSessionHolder.User_name =""
         finish()
 
 
     }
 
+
+
+    private fun CheckUserisExistornot() {
+        flag=0
+        dialog = ProgressDialogshow.progressDialog(this@RegistrationActivity)
+        dialog.show()
+
+
+        Firestoredb.collection("RegisterUser").whereEqualTo("UserName", etusername.text.toString())
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        //  Log.e("data", document.getId() + " => " + document.get("name"));
+
+                        flag = 1
+
+
+                    }
+                    if (flag == 0) {
+
+
+                        if (emaillogin.equals("true")) {
+
+                            mSessionHolder.User_Firstname = ""
+                            mSessionHolder.User_Lastname = ""
+                            mSessionHolder.User_Countrycode = ""
+                            mSessionHolder.User_Mobilenumber = ""
+                            mSessionHolder.User_OfficeEmailId = ""
+                            mSessionHolder.User_PersonalEmailId = ""
+
+                            mSessionHolder.User_EmailSource = ""
+                            mSessionHolder.User_LoginSource = ""
+
+                            mSessionHolder.User_termandcondition = false
+                            mSessionHolder.User_allowoffer = false
+
+                            mSessionHolder.User_Password = ""
+                            mSessionHolder.User_ConfirmPassword = ""
+                            mSessionHolder.User_VerifyEmailId = ""
+                            mSessionHolder.User_personalcolorcode = ""
+                            mSessionHolder.User_officecolorcode = ""
+                            mSessionHolder.User_ActivityName = ""
+
+                            mSessionHolder.User_Birthdate = ""
+                            mSessionHolder.User_Location = ""
+                            mSessionHolder.User_name = ""
+                            mSessionHolder.User_AdditionalNumber = ""
+
+                            val intent = Intent(this@RegistrationActivity, OtpVerificationActivity::class.java)
+                            intent.putExtra("username", etusername.text.toString())
+                            intent.putExtra("birthdate", etbirthdate.text.toString())
+                            intent.putExtra("firstname", etfisrtname.text.toString())
+                            intent.putExtra("lastname", etlastname.text.toString())
+                            intent.putExtra("mobilenumber", etmobilenumber.text.toString())
+                            intent.putExtra("additionalnumber", etadditionalnumber.text.toString())
+
+
+                            intent.putExtra("countrycode", selectcountrycode.text.toString())
+                            intent.putExtra("personalemail", etpersonalemail.text.toString())
+                            intent.putExtra("officeemail", etofficeemail.text.toString())
+                            intent.putExtra("password", etpassword.text.toString())
+
+                            intent.putExtra("location", location.toString())
+                            intent.putExtra("profilepic", "")
+                            intent.putExtra("source", "email")
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }else {
+
+
+                            mSessionHolder.User_Firstname = ""
+                            mSessionHolder.User_Lastname = ""
+                            mSessionHolder.User_Countrycode = ""
+                            mSessionHolder.User_Mobilenumber = ""
+                            mSessionHolder.User_OfficeEmailId = ""
+                            mSessionHolder.User_PersonalEmailId = ""
+
+                            mSessionHolder.User_EmailSource = ""
+                            mSessionHolder.User_LoginSource = ""
+
+                            mSessionHolder.User_termandcondition = false
+                            mSessionHolder.User_allowoffer = false
+
+                            mSessionHolder.User_Password = ""
+                            mSessionHolder.User_ConfirmPassword = ""
+                            mSessionHolder.User_VerifyEmailId = ""
+                            mSessionHolder.User_personalcolorcode = ""
+                            mSessionHolder.User_officecolorcode = ""
+                            mSessionHolder.User_ActivityName = ""
+
+                            mSessionHolder.User_Birthdate = ""
+                            mSessionHolder.User_Location = ""
+                            mSessionHolder.User_AdditionalNumber = ""
+                            mSessionHolder.User_name = ""
+
+                            val intent = Intent(this@RegistrationActivity, OtpVerificationActivity::class.java)
+                            intent.putExtra("username", etusername.text.toString())
+                            intent.putExtra("birthdate", etbirthdate.text.toString())
+                            intent.putExtra("firstname", etfisrtname.text.toString())
+                            intent.putExtra("lastname", etlastname.text.toString())
+                            intent.putExtra("mobilenumber", etmobilenumber.text.toString())
+                            intent.putExtra("additionalnumber", etadditionalnumber.text.toString())
+
+                            intent.putExtra("countrycode", selectcountrycode.text.toString())
+                            intent.putExtra("personalemail", etpersonalemail.text.toString())
+                            intent.putExtra("officeemail", etofficeemail.text.toString())
+                            intent.putExtra("password", etpassword.text.toString())
+                            intent.putExtra("profilepic", profilepic.toString())
+                            intent.putExtra("location", location.toString())
+                            intent.putExtra("source", source.toString())
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }
+
+                    } else {
+                        Toast.makeText(this@RegistrationActivity, "Username Allready Exist.", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+
+                    }
+                } else {
+                    dialog.dismiss()
+                    Log.e("dasd", "Error getting documents.", task.exception)
+                }
+            }
+
+
+
+    }
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             val countryCode = data!!.getStringExtra(SelectCountryActivity.RESULT_CONTRYCODE)
+            location = data.getStringExtra(SelectCountryActivity.RESULT_CONTRYNAME)
             //Toast.makeText(this, "You selected countrycode: $countryCode", Toast.LENGTH_LONG).show()
             selectcountrycode.text = countryCode
         }

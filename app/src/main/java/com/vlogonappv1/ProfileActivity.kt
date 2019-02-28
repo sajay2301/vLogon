@@ -8,9 +8,11 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -21,21 +23,40 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.db.DBHelper
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.Class.ImagePickerHelper
-import com.vlogonappv1.Class.ProgressDialogshow
-import com.vlogonappv1.Class.UserRegistrationClass
-import com.vlogonappv1.Class.getPath
+import com.vlogonappv1.dataclass.ImagePickerHelper
+import com.vlogonappv1.dataclass.ProgressDialogshow
+import com.vlogonappv1.dataclass.UserRegistrationClass
+import com.vlogonappv1.dataclass.getPath
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import java.io.File
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.vlogonappv1.spinnerdatepicker.SpinnerDatePickerDialogBuilder
+import java.util.*
+import com.vlogonappv1.spinnerdatepicker.DatePicker
+import com.vlogonappv1.spinnerdatepicker.DatePickerDialog
 
+class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
-
-
-class ProfileActivity : AppCompatActivity() {
+    override fun onDateSet(
+        view: DatePicker?,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
+        var fm = "" + (monthOfYear +1)
+        var fd = "" + dayOfMonth
+        if((monthOfYear+1)<10){
+            fm = "0"+(monthOfYear +1)
+        }
+        if (dayOfMonth<10){
+            fd="0"+dayOfMonth
+        }
+        etbirthdate.text = "$fd/$fm/$year"
+    }
 
     private var imagePickerHelper: ImagePickerHelper? = null
     private var adImage: File? = null
@@ -46,6 +67,19 @@ class ProfileActivity : AppCompatActivity() {
     private var emailLink: String = ""
     private lateinit var auth: FirebaseAuth
     private var db: DBHelper? = null
+
+
+    private var filenameqrcode: String? = null
+    lateinit var storage: FirebaseStorage
+    lateinit var storageRef: StorageReference
+    internal var downloadUrl = ""
+
+
+    internal var flag = 0
+    internal var checkdata = 0
+    lateinit var Firestoredb: FirebaseFirestore
+    var passwordencodedKey: String=""
+
     companion object {
         private const val POST_IMAGE = 0
         private const val AD_IMAGE = 1
@@ -73,6 +107,9 @@ class ProfileActivity : AppCompatActivity() {
         }
         auth = FirebaseAuth.getInstance()
         db = DBHelper(applicationContext)
+        Firestoredb = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageRef = FirebaseStorage.getInstance().reference
         btnupdate.clicks().subscribe {
 
             if (etofficeemail.text.toString() != "" && mSessionHolder.User_officecolorcode == "") {
@@ -87,7 +124,8 @@ class ProfileActivity : AppCompatActivity() {
                 mSessionHolder.User_ActivityName = ""
 
                 mSessionHolder.User_officecolorcode = ""
-                saveTask()
+               // UploadImageFileToFirebaseStorage()
+                updateprofile()
                 //BackUpTask()
             }
         }
@@ -134,12 +172,47 @@ class ProfileActivity : AppCompatActivity() {
                 sendSignInLink(etofficeemail.text.toString())
             }
         }
+        etbirthdate.clicks().subscribe{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
 
+
+          /*  val dpd = DatePickerDialog(this@ProfileActivity, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                // Display Selected date in textbox
+
+                var fm = "" + (month +1)
+                var fd = "" + dayOfMonth
+                if((month+1)<10){
+                    fm = "0"+(month +1)
+                }
+                if (dayOfMonth<10){
+                    fd="0"+dayOfMonth
+                }
+                etbirthdate.text = "$fd/$fm/$year"
+
+            }, year, month, day)
+
+            dpd.show()*/
+
+            showDate(year, month, day, R.style.DatePickerSpinner)
+        }
 
         //   checkIntent(intent)
-        getTasks()
+        UserLogin()
     }
-
+    @VisibleForTesting
+    internal fun showDate(year: Int, monthOfYear: Int, dayOfMonth: Int, spinnerTheme: Int) {
+        SpinnerDatePickerDialogBuilder()
+            .context(this@ProfileActivity)
+            .callback(this)
+            .spinnerTheme(spinnerTheme)
+            .defaultDate(year, monthOfYear, dayOfMonth)
+            .build()
+            .show()
+    }
     override fun onBackPressed() {
 
         mSessionHolder.User_officecolorcode = ""
@@ -151,6 +224,154 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+   /* fun enterAdditionalnumber() {
+
+
+        val builder = AlertDialog.Builder(this@ProfileActivity)
+        builder.setTitle("Enter Additional Number")
+        val input = EditText(this@ProfileActivity)
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+        builder.setView(input)
+        builder.setPositiveButton("Ok") { dialog, which ->
+            val m_Text = input.text.toString()
+
+            if(etadditionalnumber.text.toString() == "") {
+                etadditionalnumber.text = Editable.Factory.getInstance().newEditable(m_Text)
+            }else
+            {
+                var getnumber=etadditionalnumber.text.toString()
+                etadditionalnumber.text = Editable.Factory.getInstance().newEditable("$getnumber,$m_Text")
+            }
+
+
+
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+
+        builder.show()
+
+    }*/
+    private fun UserLogin() {
+
+        flag=0
+        dialog = ProgressDialogshow.progressDialog(this@ProfileActivity)
+        dialog.show()
+        Firestoredb.collection("RegisterUser").whereEqualTo("Primary Email", mSessionHolder.User_Login)
+            .whereEqualTo("Source", mSessionHolder.Source_login)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        //  Log.e("data", document.getId() + " => " + document.get("name"));
+                        flag = 1
+                        dialog.dismiss()
+                        mSessionHolder.USER_ID = document.id
+                        etfisrtname.text = Editable.Factory.getInstance().newEditable(document.get("Firstname").toString())
+                        etlastname.text = Editable.Factory.getInstance().newEditable(document.get("Lastname").toString())
+                        etmobilenumber.text = Editable.Factory.getInstance().newEditable(document.get("Mobile Number").toString())
+                        etpersonalemail.text = Editable.Factory.getInstance().newEditable(document.get("Primary Email").toString())
+                        etofficeemail.text = Editable.Factory.getInstance().newEditable(document.get("OfficeEmail").toString())
+                        txtcountrycode.text = document.get("Countrycode").toString()
+
+                        etbirthdate.text = document.get("BirthDate").toString()
+                        etadditionalnumber.text = Editable.Factory.getInstance().newEditable(document.get("AdditionalNumber").toString())
+                        etusername.text = document.get("UserName").toString()
+
+
+                        profilepic = document.get("ProfilePic").toString()
+                        Glide.with(applicationContext).load(profilepic)
+                            .apply(
+                                RequestOptions()
+                                    .placeholder(R.mipmap.ic_launcher_round)
+                            )
+                            .into(userImageProfile)
+
+                        when {
+                            document.get("Gender").toString().equals("Female") -> radiofontsize.check(R.id.radiofemale)
+                            document.get("Gender").toString().equals("Male") -> radiofontsize.check(R.id.radiomale)
+                            document.get("Gender").toString().equals("Other") -> radiofontsize.check(R.id.radioother)
+
+                        }
+
+                        etaddress.text = Editable.Factory.getInstance().newEditable(document.get("Address").toString())
+                        etcity.text = Editable.Factory.getInstance().newEditable(document.get("City").toString())
+                        etcountry.text = Editable.Factory.getInstance().newEditable(document.get("Country").toString())
+
+                        if (etpersonalemail.text.toString() != "") {
+                            personalemailverify.setTextColor(Color.parseColor("#54B948"))
+                            personalemailverify.text = "Verified"
+                        }
+                        if (etofficeemail.text.toString() != "") {
+                            mSessionHolder.User_officecolorcode = "#54B948"
+                            officeemailverify.setTextColor(Color.parseColor("#54B948"))
+                            officeemailverify.text = "Verified"
+                        }
+
+                        if (mSessionHolder.User_ActivityName.equals("Profile")) {
+                            val i = intent.extras
+                            try {
+                                emailLink = i!!.getString("emaillink")
+
+
+                                dialog = ProgressDialogshow.progressDialog(this@ProfileActivity)
+                                dialog.show()
+                                if (auth.isSignInWithEmailLink(emailLink)) {
+                                    // Retrieve this from wherever you stored it
+
+
+                                    //mSessionHolder.User_OfficeEmailId
+
+                                    // The client SDK will parse the code from the link for you.
+                                    auth.signInWithEmailLink(mSessionHolder.User_OfficeEmailId, emailLink)
+                                        .addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+
+                                                dialog.dismiss()
+
+                                                mSessionHolder.User_ActivityName=""
+                                                etofficeemail.text = Editable.Factory.getInstance()
+                                                    .newEditable(mSessionHolder.User_OfficeEmailId)
+                                                officeemailverify.setTextColor(Color.parseColor("#54B948"))
+                                                mSessionHolder.User_officecolorcode = "#54B948"
+                                                officeemailverify.text = "Verified"
+
+
+                                            } else {
+                                                dialog.dismiss()
+                                                Toast.makeText(
+                                                    applicationContext,
+                                                    "Error signing in with email link",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+
+                                            }
+                                        }
+                                }
+                            } catch (e: IllegalStateException) {
+
+                            }
+
+
+                        }
+                    }
+                    if (flag == 0) {
+                        Toast.makeText(this@ProfileActivity, "Something Went Wrong", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+
+
+                    } else {
+
+                        dialog.dismiss()
+                    }
+                } else {
+                    dialog.dismiss()
+                    Log.e("dasd", "Error getting documents.", task.exception)
+                }
+            }
+
+
+    }
      private fun getTasks() {
         class GetTasks : AsyncTask<Void, Void, List<UserRegistrationClass>>() {
 
@@ -258,7 +479,125 @@ class ProfileActivity : AppCompatActivity() {
         val gt = GetTasks()
         gt.execute()
     }
+    fun UploadImageFileToFirebaseStorage() {
 
+        dialog = ProgressDialogshow.progressDialog(this@ProfileActivity)
+        dialog.show()
+
+        val picurl = Uri.fromFile(adImage)
+        val photoRef = storageRef.child("vlogonapp")
+            .child(picurl.lastPathSegment)
+        // [END get_child_ref]
+
+
+        photoRef.putFile(picurl).addOnProgressListener { taskSnapshot ->
+
+        }.continueWithTask { task ->
+            // Forward any exceptions
+            if (!task.isSuccessful) {
+                throw task.exception!!
+            }
+
+            Log.e("uploadFromUri", "uploadFromUri: upload success")
+
+            // Request the public download URL
+            photoRef.downloadUrl
+        }.addOnSuccessListener { downloadUri ->
+            // Upload succeeded
+            Log.e("downloadUri", downloadUri.toString())
+            dialog.dismiss()
+
+
+        }.addOnFailureListener { exception ->
+            // Upload failed
+            Log.e("exception", exception.message)
+            dialog.dismiss()
+        }
+
+
+    }
+    private fun updateprofile() {
+
+        dialog = ProgressDialogshow.progressDialog(this@ProfileActivity)
+        dialog.show()
+
+
+        val setuserinfo = HashMap<String, Any>()
+
+        setuserinfo["Firstname"] = etfisrtname.text.toString()
+        setuserinfo["Lastname"] =etlastname.text.toString()
+        setuserinfo["Mobile Number"] =etmobilenumber.text.toString()
+        setuserinfo["Primary Email"] = mSessionHolder.User_Login
+        setuserinfo["OfficeEmail"] = etofficeemail.text.toString()
+        setuserinfo["ProfilePic"] = profilepic.toString()
+        setuserinfo["Source"] = mSessionHolder.Source_login
+        setuserinfo["Countrycode"] = txtcountrycode.text.toString()
+
+        setuserinfo["Gender"] = gender.toString()
+        setuserinfo["City"] =etcity.text.toString()
+        setuserinfo["Country"] = etcountry.text.toString()
+        setuserinfo["Address"] =etaddress.text.toString()
+        setuserinfo["AdditionalNumber"] =etadditionalnumber.text.toString()
+        setuserinfo["BirthDate"] =etbirthdate.text.toString()
+
+        Firestoredb.collection("RegisterUser")
+            .document(mSessionHolder.USER_ID)
+            .update(setuserinfo)
+            .addOnSuccessListener {
+
+
+                try {
+                    db = DBHelper(applicationContext)
+
+
+                    val userdata = UserRegistrationClass()
+                    userdata.firstname = etfisrtname.text.toString()
+                    userdata.lastname = etlastname.text.toString()
+                    userdata.mobilenumber = etmobilenumber.text.toString()
+                    userdata.personalemail = mSessionHolder.User_Login
+                    userdata.source = mSessionHolder.Source_login
+
+                    userdata.officeemail = etofficeemail.text.toString()
+                    userdata.profilepic = profilepic.toString()
+                    userdata.gender = gender.toString()
+                    userdata.address = etaddress.text.toString()
+                    userdata.city = etcity.text.toString()
+                    userdata.country = etcountry.text.toString()
+                    userdata.countrycode = txtcountrycode.text.toString()
+
+                    userdata.additionalnumber = etadditionalnumber.text.toString()
+                    userdata.birthdate = etbirthdate.text.toString()
+
+                    val id_db = db!!.updateUserRegistration(userdata)
+                    db!!.closeDB()
+                }catch (e:KotlinNullPointerException)
+                {
+
+                }
+
+                val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+                overridePendingTransition(R.anim.enter, R.anim.exit)
+                startActivity(intent)
+                finish()
+
+                Toast.makeText(applicationContext, "Profile Update Successfully", Toast.LENGTH_LONG).show()
+
+            }
+            .addOnFailureListener { e ->
+                Log.e("addded", "Error adding Register", e)
+                Toast.makeText(
+                    this@ProfileActivity,
+                    "Register User could not be added",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
+
+
+
+
+    }
 
     private fun saveTask() {
 
@@ -322,12 +661,7 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun onPostExecute(response: String) {
                 super.onPostExecute(response)
-                val intent = Intent(this@ProfileActivity, MainActivity::class.java)
-                overridePendingTransition(R.anim.enter, R.anim.exit)
-                startActivity(intent)
-                finish()
-                db!!.closeDB()
-                Toast.makeText(applicationContext, "Profile Update Successfully", Toast.LENGTH_LONG).show()
+
             }
         }
 

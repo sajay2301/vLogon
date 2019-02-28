@@ -18,7 +18,6 @@ import android.widget.EditText
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.drive.*
 import com.google.android.gms.drive.query.Filters
 import com.google.android.gms.drive.query.Query
@@ -29,12 +28,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.rxbinding2.view.clicks
+import com.roughike.bottombar.BottomBar
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.Class.ProgressDialogshow
-import com.vlogonappv1.Class.UserRegistrationClass
-import com.vlogonappv1.ResumeActivity.AdvanceResumeActivity
-import com.vlogonappv1.Twofactorverification.EnterMobileNumberActivity
-import com.vlogonappv1.Twofactorverification.FirstStepMobileVerificationActivity
+import com.vlogonappv1.dataclass.ProgressDialogshow
+import com.vlogonappv1.dataclass.UserRegistrationClass
+import com.vlogonappv1.contactlist.AddressBookActivity
+import com.vlogonappv1.resumeactivity.AdvanceResumeActivity
+import com.vlogonappv1.twofactorverification.FirstStepMobileVerificationActivity
 import com.vlogonappv1.backup.LocalBackup
 import com.vlogonappv1.backup.RemoteBackup
 import com.vlogonappv1.db.DBHelper
@@ -75,7 +75,7 @@ class MainActivity :  RemoteBackup() {
     private val TAG = "vlogon_drive_backup"
     private val BACKUP_FOLDER_KEY = "backup_folder"
      var passwordencodedKey: String=""
-
+    private lateinit var bottomBar: BottomBar
     companion object {
 
 
@@ -100,7 +100,7 @@ class MainActivity :  RemoteBackup() {
         db = DBHelper(applicationContext)
         Firestoredb = FirebaseFirestore.getInstance()
 
-
+        bottomBar = findViewById(R.id.bottomBar)
 
         toolbar?.apply {
 
@@ -117,6 +117,8 @@ class MainActivity :  RemoteBackup() {
                 FirebaseAuth.getInstance().signOut()
                 mSessionHolder.User_Login = ""
                 mSessionHolder.Source_login = ""
+                mSessionHolder.User_Password = ""
+
                 Toast.makeText(applicationContext, "Logout", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@MainActivity, UserLoginActivity::class.java)
                 overridePendingTransition(R.anim.enter, R.anim.exit)
@@ -149,7 +151,7 @@ class MainActivity :  RemoteBackup() {
             startActivity(intent)
             finish()
         }
-        getTasks()
+        UserLogin()
 
 
         if(mSessionHolder.twostepverify=="true")
@@ -172,7 +174,7 @@ class MainActivity :  RemoteBackup() {
         }
 
 
-        GetSearchInRelsult()
+
 
 
 
@@ -191,6 +193,36 @@ class MainActivity :  RemoteBackup() {
             isBackup = "backup"
             signIn(isBackup!!)
         }
+
+        bottomBar.setOnTabReselectListener {tabId->
+
+
+
+            when (tabId) {
+                R.id.addressbook -> {
+                    val intent = Intent(this@MainActivity, AddressBookActivity::class.java)
+                    overridePendingTransition(R.anim.enter, R.anim.exit)
+                    startActivity(intent)
+                }
+            }
+
+
+        }
+        bottomBar.setOnTabSelectListener {tabId->
+
+
+
+            when (tabId) {
+                R.id.addressbook -> {
+                    val intent = Intent(this@MainActivity, AddressBookActivity::class.java)
+                    overridePendingTransition(R.anim.enter, R.anim.exit)
+                    startActivity(intent)
+                }
+            }
+
+
+        }
+
 
     }
 
@@ -342,6 +374,54 @@ class MainActivity :  RemoteBackup() {
 
     }
 
+
+    private fun UserLogin() {
+
+        flag=0
+        dialog = ProgressDialogshow.progressDialog(this@MainActivity)
+        dialog.show()
+        Firestoredb.collection("RegisterUser").whereEqualTo("Primary Email", mSessionHolder.User_Login)
+            .whereEqualTo("Source", mSessionHolder.Source_login)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        //  Log.e("data", document.getId() + " => " + document.get("name"));
+                        flag = 1
+
+
+                        displayname.text = document.get("Firstname").toString() + " " + document.get("Lastname").toString()
+                        displayemailid.text = document.get("Primary Email").toString()
+                        profilepic = document.get("ProfilePic").toString()
+                        Log.e("picture", profilepic.toString())
+                        Glide.with(applicationContext).load(profilepic)
+                            .apply(
+                                RequestOptions()
+                                    .placeholder(R.mipmap.ic_launcher_round)
+                            )
+                            .into(userImageProfile)
+
+
+                    }
+                    if (flag == 0) {
+                        Toast.makeText(this@MainActivity, "Something Went Wrong", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+
+
+                    } else {
+
+                        dialog.dismiss()
+                        GetSearchInRelsult()
+                    }
+                } else {
+                    dialog.dismiss()
+                    Log.e("dasd", "Error getting documents.", task.exception)
+                }
+            }
+
+
+    }
     private fun getTasks() {
         class GetTasks : AsyncTask<Void, Void, List<UserRegistrationClass>>() {
 

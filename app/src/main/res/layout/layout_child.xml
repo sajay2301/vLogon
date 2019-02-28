@@ -1,0 +1,613 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:background="@color/white"
+        android:orientation="vertical">
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+    <LinearLayout
+            android:id="@+id/llCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_unchecked"/>
+
+            <ImageView
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_call"/>
+
+        </FrameLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/label_call_us"
+                android:visibility="gone"
+                android:textColor="@color/text_semi_dark"
+                android:textSize="@dimen/_12sdp"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/llmassage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_unchecked"/>
+
+            <ImageView
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_rate"/>
+
+
+        </FrameLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/label_rate"
+                android:visibility="gone"
+                android:textColor="@color/text_semi_dark"
+                android:textSize="@dimen/_12sdp"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/llblockcall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_unchecked"/>
+
+            <ImageView
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_inquiry"/>
+
+        </FrameLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/label_inquiry"
+                android:visibility="gone"
+                android:textColor="@color/text_semi_dark"
+                android:textSize="@dimen/_12sdp"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/llshareContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_unchecked"/>
+
+            <ImageView
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_biz_share"/>
+
+        </FrameLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Share"
+                android:visibility="gone"
+                android:textColor="@color/text_semi_dark"
+                android:textSize="@dimen/_12sdp"
+        />
+
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/layoutcall"
+            android:visibility="gone"
+
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/llsimplecall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/phone"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_call_us"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llwhatsappcall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+        >
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/whatsapp"/>
+
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_rate"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llmessagnercall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/messenger"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_inquiry"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llinstacall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/instagram"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/llhungoutcall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/hangout"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/layoutmessage"
+
+            android:visibility="gone"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/llsimplemessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/chat"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_call_us"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llwhatsappmessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+        >
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/whatsapp"/>
+
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_rate"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llmessagnermessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/messenger"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_inquiry"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/llinstamessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/instagram"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/llhungoutmessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/hangout"/>
+
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
