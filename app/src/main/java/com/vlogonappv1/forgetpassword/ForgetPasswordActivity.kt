@@ -22,8 +22,8 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.R
-import com.vlogonappv1.SelectCountryActivity
-import com.vlogonappv1.UserLoginActivity
+import com.vlogonappv1.activity.SelectCountryActivity
+import com.vlogonappv1.activity.UserLoginActivity
 import com.vlogonappv1.spinnerdatepicker.DatePicker
 import com.vlogonappv1.spinnerdatepicker.DatePickerDialog
 import com.vlogonappv1.spinnerdatepicker.SpinnerDatePickerDialogBuilder

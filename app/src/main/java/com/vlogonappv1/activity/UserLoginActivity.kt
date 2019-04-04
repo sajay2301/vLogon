@@ -1,4 +1,4 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -34,7 +34,9 @@ import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
+import com.vlogonappv1.AppApplication
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
+import com.vlogonappv1.R
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.dataclass.UserRegistrationClass
 import com.vlogonappv1.forgetpassword.ForgetPasswordActivity
@@ -236,7 +238,7 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
             .build()
         try {
             val info = packageManager.getPackageInfo(
-                "com.vlogon",
+                "com.vlogonappv1",
                 PackageManager.GET_SIGNATURES
             )
             for (signature in info.signatures) {
@@ -617,11 +619,21 @@ class UserLoginActivity : AppCompatActivity(),GoogleApiClient.OnConnectionFailed
 
 
                     } else {
-                        Toast.makeText(applicationContext, "Login Successfully", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this@UserLoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.enter, R.anim.exit)
-                        finish()
+
+                        if(AppApplication.mSessionHolder.firsttimeload.equals("true")) {
+                            Toast.makeText(applicationContext, "Login Successfully", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@UserLoginActivity, RestoreFoundActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }else
+                        {
+                            Toast.makeText(applicationContext, "Login Successfully", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@UserLoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }
 
                     }
                 } else {

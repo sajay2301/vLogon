@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.jakewharton.rxbinding2.view.clicks
-import com.vlogonappv1.MainActivity
+import com.vlogonappv1.activity.MainActivity
 import com.vlogonappv1.R
-import com.vlogonappv1.SelectCountryActivity
+import com.vlogonappv1.activity.SelectCountryActivity
 import kotlinx.android.synthetic.main.activity_enter_mobile_number.*
 
 

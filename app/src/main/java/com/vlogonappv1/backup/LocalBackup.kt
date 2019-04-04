@@ -26,8 +26,8 @@ import android.widget.Toast
 
 
 
-import com.vlogonappv1.MainActivity
-import com.vlogonappv1.Permissions
+import com.vlogonappv1.activity.MainActivity
+import com.vlogonappv1.activity.Permissions
 import com.vlogonappv1.R
 import com.vlogonappv1.db.DBHelper
 

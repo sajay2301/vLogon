@@ -1,6 +1,7 @@
 package com.vlogonappv1.dataclass
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,13 +18,15 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ImagePickerHelper(private val activity: AppCompatActivity) {
+class ImagePickerHelper(private val activity: Activity) {
 
     companion object {
         const val REQUEST_CAMERA = 0
         const val SELECT_FILE = 1
         const val PERMISSIONS_TAKE_IMAGE = 2004
         const val PERMISSIONS_PICK_IMAGE = 2005
+
+        const val SELECT_FILE1 = 2
     }
 
     var mFile: FileModel? = null
@@ -61,7 +64,10 @@ class ImagePickerHelper(private val activity: AppCompatActivity) {
             e.printStackTrace()
         }
     }
-
+    fun LoadImage(fileRequest: Int) {
+        this.fileRequest = fileRequest
+        actionscanPickImage(fileRequest)
+    }
     fun actionTakeImage(fileRequest: Int) {
         this.fileRequest = fileRequest
         if (hasRequiredPermissionForTakeImage()) {
@@ -79,6 +85,16 @@ class ImagePickerHelper(private val activity: AppCompatActivity) {
             requestPermissionForPickImage()
         }
     }
+
+    fun actionscanPickImage(fileRequest: Int) {
+        this.fileRequest = fileRequest
+        if (hasRequiredPermissionForPickImage()) {
+            fromscanGallery()
+        } else {
+            requestPermissionForPickImage()
+        }
+    }
+
 
     private fun hasRequiredPermissionForTakeImage(): Boolean {
         return ContextCompat.checkSelfPermission(activity,
@@ -131,6 +147,13 @@ class ImagePickerHelper(private val activity: AppCompatActivity) {
         intent.type = "image/*"
         activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), SELECT_FILE)
     }
+
+    private fun fromscanGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), SELECT_FILE1)
+    }
+
 
     data class FileModel(val fileRequest: Int, val mFile: File)
 }

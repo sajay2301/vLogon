@@ -1,30 +1,28 @@
 package com.vlogonappv1.adapter
 
-
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.app.ShareCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.amulyakhare.textdrawable.TextDrawable
 import com.amulyakhare.textdrawable.util.ColorGenerator
-import com.vlogonappv1.dataclass.ContactListItem
+import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.R
-import android.content.Intent
-import android.net.Uri
-import android.support.v4.app.ShareCompat
-import android.util.Log
 import com.vlogonappv1.contactlist.AddContactActivity
 import com.vlogonappv1.contactlist.AddressBookActivity
+import com.vlogonappv1.dataclass.ContactListItem
 import com.vlogonappv1.db.DBHelper
-import org.jetbrains.anko.doAsync
 import java.util.*
 
-
-class ExpandableListAdapter(var context: Context, var expandableListView: ExpandableListView, var itemListheader: ArrayList<ContactListItem>) : BaseExpandableListAdapter() {
+class RegisterExpandableListAdapter (var context: Context, var expandableListView: ExpandableListView, var itemListheader: ArrayList<ContactListItem>) : BaseExpandableListAdapter() {
 
 
     var contactList: ArrayList<ContactListItem>
@@ -64,15 +62,14 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
 
         if (convertViewMain == null) {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertViewMain = inflater.inflate(R.layout.unregisteritemdatalayout, null)
+            convertViewMain = inflater.inflate(R.layout.activity_listitems, null)
         }
 
         val ivContactImage = convertViewMain?.findViewById<View>(R.id.ivContactImage) as ImageView
         val tvContactName = convertViewMain.findViewById<View>(R.id.tvContactName) as TextView
         val tvPhoneNumber = convertViewMain.findViewById<View>(R.id.tvPhoneNumber) as TextView
         val tvEmailID = convertViewMain.findViewById<View>(R.id.tvEmailID) as TextView
-        val btninvite = convertViewMain.findViewById<View>(R.id.btninvite) as Button
-        val cont_item_root = convertViewMain.findViewById<View>(R.id.cont_item_root) as RelativeLayout
+        val btnupdate = convertViewMain.findViewById<View>(R.id.btnupdate) as Button
 
 
         tvContactName.text = contactList[groupPosition].contactusername
@@ -86,11 +83,29 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
 
 
         ivContactImage.setOnClickListener {
+            if (expandableListView.isGroupExpanded(groupPosition))
+                expandableListView.collapseGroup(groupPosition)
+            else
+                expandableListView.expandGroup(groupPosition)
+
+        }
+
+
+        ivContactImage.setOnClickListener {
+            if (expandableListView.isGroupExpanded(groupPosition))
+                expandableListView.collapseGroup(groupPosition)
+            else
+                expandableListView.expandGroup(groupPosition)
+
+        }
+
+
+        btnupdate.clicks().subscribe{
+
             val contactListItem = contactList[groupPosition]
             val intent = Intent(context, AddContactActivity::class.java)
-            intent.putExtra("addcontact","updateunregisterinvited")
+            intent.putExtra("addcontact","update")
             intent.putExtra("value","true")
-
             intent.putExtra("registerid",contactListItem.contactid.toString())
             intent.putExtra("username",contactListItem.contactusername)
             intent.putExtra("firstname",contactListItem.contactfirstname)
@@ -104,77 +119,10 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
             intent.putExtra("additionalnumner",contactListItem.contactadditionalnumber)
             intent.putExtra("tagename",contactListItem.contacttage)
             intent.putExtra("emailid",contactListItem.contactemail)
-
-
             (context as AddressBookActivity).finish()
-
             context.startActivity(intent)
 
-        }
 
-        cont_item_root.setOnClickListener {
-            val contactListItem = contactList[groupPosition]
-            val intent = Intent(context, AddContactActivity::class.java)
-            intent.putExtra("addcontact","updateunregisterinvited")
-            intent.putExtra("value","true")
-
-            intent.putExtra("registerid",contactListItem.contactid.toString())
-            intent.putExtra("username",contactListItem.contactusername)
-            intent.putExtra("firstname",contactListItem.contactfirstname)
-            intent.putExtra("lastname",contactListItem.contactlastname)
-            intent.putExtra("mobilenumber",contactListItem.contactNumber)
-            intent.putExtra("countrycode",contactListItem.contactcountrycode)
-            intent.putExtra("birthdate",contactListItem.contactebirthdate)
-            intent.putExtra("profilepic",contactListItem.contactimage)
-            intent.putExtra("gender",contactListItem.contactgender)
-            intent.putExtra("address",contactListItem.contactaddress)
-            intent.putExtra("additionalnumner",contactListItem.contactadditionalnumber)
-            intent.putExtra("tagename",contactListItem.contacttage)
-            intent.putExtra("emailid",contactListItem.contactemail)
-
-
-            (context as AddressBookActivity).finish()
-
-            context.startActivity(intent)
-
-        }
-
-
-
-
-        if(contactList[groupPosition].status.equals("update"))
-        {
-            btninvite.visibility=View.VISIBLE
-        }
-        else
-        {
-            btninvite.visibility=View.GONE
-        }
-        btninvite.setOnClickListener {
-
-            val contactListItem = contactList[groupPosition]
-            val intent = Intent(context, AddContactActivity::class.java)
-            intent.putExtra("addcontact","updateunregister")
-            intent.putExtra("value","true")
-
-            intent.putExtra("registerid",contactListItem.contactid.toString())
-            intent.putExtra("username",contactListItem.contactusername)
-            intent.putExtra("firstname",contactListItem.contactfirstname)
-            intent.putExtra("lastname",contactListItem.contactlastname)
-            intent.putExtra("mobilenumber",contactListItem.contactNumber)
-            intent.putExtra("countrycode",contactListItem.contactcountrycode)
-            intent.putExtra("birthdate",contactListItem.contactebirthdate)
-            intent.putExtra("profilepic",contactListItem.contactimage)
-            intent.putExtra("gender",contactListItem.contactgender)
-            intent.putExtra("address",contactListItem.contactaddress)
-            intent.putExtra("additionalnumner",contactListItem.contactadditionalnumber)
-            intent.putExtra("tagename",contactListItem.contacttage)
-            intent.putExtra("emailid",contactListItem.contactemail)
-
-
-            (context as AddressBookActivity).finish()
-
-            context.startActivity(intent)
         }
 
         return convertViewMain
@@ -189,7 +137,7 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
         var convertViewChidview = convertView
         if (convertViewChidview == null) {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertViewChidview = inflater.inflate(R.layout.layout_child, null)
+            convertViewChidview = inflater.inflate(R.layout.layout_register_child, null)
 
 
         }
@@ -219,8 +167,8 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
             // layoutmessage.visibility=View.GONE
         }
         llmassage.setOnClickListener {
-            layoutcall.visibility=View.GONE
-            layoutmessage.visibility=View.VISIBLE
+            layoutcall.visibility= View.GONE
+            layoutmessage.visibility= View.VISIBLE
         }
 
         llsimplecall.setOnClickListener {
@@ -466,7 +414,8 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
             contactList.addAll(itemsList)
         } else {
             for (wp in itemsList) {
-                if (wp.contactusername!!.toLowerCase(Locale.getDefault()).contains(charText) || wp.contacttage!!.toLowerCase(Locale.getDefault()).contains(charText) || wp.contactaddress!!.toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.contactusername!!.toLowerCase(Locale.getDefault()).contains(charText) || wp.contacttage!!.toLowerCase(
+                        Locale.getDefault()).contains(charText) || wp.contactaddress!!.toLowerCase(Locale.getDefault()).contains(charText)) {
                     contactList.add(wp)
                 }else
                 {
@@ -478,4 +427,3 @@ class ExpandableListAdapter(var context: Context, var expandableListView: Expand
     }
 
 }
-

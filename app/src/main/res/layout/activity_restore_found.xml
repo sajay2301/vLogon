@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:background="#ffffff"
+
+              android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/dimen_0"
+            android:id="@+id/llClubDetailsToolbar"
+            android:layout_height="wrap_content">
+        <include
+
+                layout="@layout/layout_toolbar"/>
+    </android.support.v7.widget.CardView>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:id="@+id/main_layout"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_20sdp"
+                    android:id="@+id/restore_icon"
+                    android:src="@drawable/autorestoreicon"
+                    android:textColor="@color/glucosio_text"/>
+
+
+
+
+
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/glucosio_separator"/>
+
+            <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp">
+
+                <TextView
+                        android:id="@+id/textrestore"
+                        fontPath="fonts/lato-bold.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:text="Restore Found"
+                        android:textColor="@color/glucosio_text"
+                        android:textStyle="bold"
+                        tools:ignore="MissingPrefix"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/glucosio_separator"/>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textSize="@dimen/_14sdp"
+
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/activity_restore_drive_desc"
+                    android:textColor="@color/glucosio_text"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/secondlayout"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+
+
+        <Button
+                android:id="@+id/button_restore"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/black"
+                android:padding="16dp"
+                android:text="Restore"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:textColor="@color/white"/>
+
+        <Button
+                android:id="@+id/button_skip"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/black"
+                android:padding="16dp"
+                android:text="Skip"
+                android:textColor="@color/white"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.Manifest
 import android.app.Activity
@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
@@ -33,6 +34,7 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
+import com.vlogonappv1.R
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -82,6 +84,11 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
             facebooklogin()
 
         }
+
+        var builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
+
         RxView.clicks(button).subscribe { aVoid ->
 
             isLinkdin = true
@@ -185,7 +192,7 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
 
         // getcontactlist()
 
-       Permissions.verifyStoragePermissions(this@LoginActivity)
+        Permissions.verifyStoragePermissions(this@LoginActivity)
     }
 
     private fun handleTwitterSession(session: TwitterSession) {

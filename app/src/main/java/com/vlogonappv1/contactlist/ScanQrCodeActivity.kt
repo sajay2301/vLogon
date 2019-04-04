@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
 import com.vlogonappv1.R
+import com.vlogonappv1.activity.CommonAddActivity
 import com.vlogonappv1.preference.ActivityUtils
 import com.vlogonappv1.preference.AppPreference
 import com.vlogonappv1.preference.AppUtils
@@ -19,6 +20,11 @@ import com.vlogonappv1.preference.PrefKey
 import kotlinx.android.synthetic.main.activity_scan_qr_code.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.util.ArrayList
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+
+
+
 
 class ScanQrCodeActivity : AppCompatActivity() {
 
@@ -213,9 +219,7 @@ class ScanQrCodeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        val intent = Intent( this@ScanQrCodeActivity, AddContactActivity::class.java)
-        intent.putExtra("addcontact","manually")
-        intent.putExtra("value","false")
+        val intent = Intent( this@ScanQrCodeActivity, CommonAddActivity::class.java)
         overridePendingTransition(R.anim.enter, R.anim.exit)
         startActivity(intent)
         finish()

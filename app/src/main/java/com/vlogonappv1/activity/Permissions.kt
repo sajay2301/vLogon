@@ -1,10 +1,10 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
-import com.vlogonappv1.MainActivity.Companion.REQUEST_CODE_PERMISSIONS
+import com.vlogonappv1.activity.MainActivity.Companion.REQUEST_CODE_PERMISSIONS
 
 
 object Permissions {
@@ -23,7 +23,7 @@ object Permissions {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
                     activity,
-                    PERMISSIONS_STORAGE,
+                PERMISSIONS_STORAGE,
                     REQUEST_CODE_PERMISSIONS
             )
         }

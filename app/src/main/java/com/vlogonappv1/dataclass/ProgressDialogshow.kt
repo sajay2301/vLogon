@@ -1,5 +1,6 @@
 package com.vlogonappv1.dataclass
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -11,7 +12,7 @@ import com.vlogonappv1.R
 class ProgressDialogshow {
 
     companion object {
-    fun progressDialog(context: Context): Dialog {
+    fun progressDialog(context: Activity): Dialog {
         val dialog = Dialog(context)
         val inflate = LayoutInflater.from(context).inflate(R.layout.small_progress_bar, null)
         dialog.setContentView(inflate)

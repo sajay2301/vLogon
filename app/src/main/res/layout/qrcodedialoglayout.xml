@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/transparent"
+              android:id="@+id/loginlayout"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/white_rounded_corder"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:id="@+id/buttonshare"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:tint="@color/black"
+                        android:visibility="gone"
+                        android:padding="@dimen/_3sdp"
+                        android:src="@drawable/ic_biz_share"
+                        android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:id="@+id/buttoncancel"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:src="@drawable/ic_close_black_24dp"
+                        android:layout_centerHorizontal="true"/>
+                </LinearLayout>
+
+                <ImageView
+                        android:id="@+id/codedisplay"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@mipmap/ic_launcher_round"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

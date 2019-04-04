@@ -22,10 +22,10 @@ class DBHelper(private val mContext: Context
     companion object {
 
         //Database Version
-        val databaseVersion = 2
+        val databaseVersion = 8
 
         //Database Name
-        val DATABASE_NAME = "vlogonappbatabase2"
+        val DATABASE_NAME = "vlogonappbatabase8"
 
         //Data Type
         private val TEXT = " TEXT "
@@ -125,7 +125,7 @@ class DBHelper(private val mContext: Context
         private val CONTACT_Countrycode = "contact_countrycode"
         private val CONTACT_AdditionalNumber = "contact_additionalnumber"
         private val CONTACT_Tage = "contact_tage"
-
+        private val CONTACT_Status = "contact_status"
 
 
         private val TABLE_BLOCKCONTACT = "BlockContacts"
@@ -142,7 +142,7 @@ class DBHelper(private val mContext: Context
         private val BLOCK_Countrycode = "block_countrycode"
         private val BLOCK_AdditionalNumber = "block_additionalnumber"
         private val BLOCK_Tage = "block_tage"
-
+        private val BLOCK_Status = "block_status"
 
         private val TABLE_RegisterCONTACT = "RegisterContacts"
         private val Register_ID = "registercid"
@@ -159,6 +159,23 @@ class DBHelper(private val mContext: Context
         private val Register_AdditionalNumber = "register_additionalnumber"
         private val Register_Tage = "register_tage"
 
+
+
+        private val TABLE_DUBLICATECONTACT = "duplicateContacts"
+        private val DUPLICATE_ID = "duplicateid"
+        private val DUPLICATE_Firstname = "duplicate_firstname"
+        private val DUPLICATE_Lastname = "duplicate_lastname"
+        private val DUPLICATE_NUMBER = "duplicate_number"
+        private val DUPLICATE_EmailID = "duplicate_emailid"
+        private val DUPLICATE_UserName = "duplicate_username"
+        private val DUPLICATE_Birthdate = "duplicate_birthdate"
+        private val DUPLICATE_ProfilePic = "duplicate_profilepic"
+        private val DUPLICATE_Gender = "duplicate_gender"
+        private val DUPLICATE_Address = "duplicate_address"
+        private val DUPLICATE_Countrycode = "duplicate_countrycode"
+        private val DUPLICATE_AdditionalNumber = "duplicate_additionalnumber"
+        private val DUPLICATE_Tage = "duplicate_tage"
+        private val DUPLICATE_Status = "duplicate_status"
 
         //Students table
         private val CREATE_TABLE_STUDENTS = "CREATE TABLE " + TABLE_UserRegistration + "(" +
@@ -224,6 +241,24 @@ class DBHelper(private val mContext: Context
 
 
 
+        private val CREATE_TABLE_DUBLICATECONTACT="CREATE TABLE " + TABLE_DUBLICATECONTACT + "(" +
+                DUPLICATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                DUPLICATE_UserName + " TEXT, " +
+                DUPLICATE_NUMBER + " TEXT, " +
+                DUPLICATE_EmailID + " TEXT, " +
+                DUPLICATE_Firstname + " TEXT, " +
+                DUPLICATE_Lastname + " TEXT, " +
+                DUPLICATE_Birthdate + " TEXT, " +
+                DUPLICATE_ProfilePic + " TEXT, " +
+                DUPLICATE_Gender + " TEXT, " +
+                DUPLICATE_Address + " TEXT, " +
+                DUPLICATE_Countrycode + " TEXT, " +
+                DUPLICATE_AdditionalNumber + " TEXT, " +
+                DUPLICATE_Tage + " TEXT, " +
+                DUPLICATE_Status + " TEXT " +
+        ")"
+
+
         private val CREATE_TABLE_CONTACT="CREATE TABLE " + TABLE_CONTACT + "(" +
                 CONTACT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 CONTACT_UserName + " TEXT, " +
@@ -237,8 +272,9 @@ class DBHelper(private val mContext: Context
                 CONTACT_Address + " TEXT, " +
                 CONTACT_Countrycode + " TEXT, " +
                 CONTACT_AdditionalNumber + " TEXT, " +
-                CONTACT_Tage + " TEXT " +
-        ")"
+                CONTACT_Tage + " TEXT, " +
+                CONTACT_Status + " TEXT " +
+                ")"
 
         private val CREATE_TABLE_BLOCKCONTACT="CREATE TABLE " + TABLE_BLOCKCONTACT + "(" +
                 BLOCK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -253,7 +289,8 @@ class DBHelper(private val mContext: Context
                 BLOCK_Address + " TEXT, " +
                 BLOCK_Countrycode + " TEXT, " +
                 BLOCK_AdditionalNumber + " TEXT, " +
-                BLOCK_Tage + " TEXT " +
+                BLOCK_Tage + " TEXT, " +
+                BLOCK_Status + " TEXT " +
                 ")"
 
 
@@ -284,6 +321,7 @@ class DBHelper(private val mContext: Context
         private val DELETE_CONTACT = "DROP TABLE IF EXISTS $TABLE_CONTACT"
         private val DELETE_BLOCKCONTACT = "DROP TABLE IF EXISTS $TABLE_BLOCKCONTACT"
         private val DELETE_RegisterCONTACT = "DROP TABLE IF EXISTS $TABLE_RegisterCONTACT"
+        private val DELETE_DUBLICATECONTACT = "DROP TABLE IF EXISTS $TABLE_DUBLICATECONTACT"
         //Exams Table
 
     }
@@ -297,6 +335,7 @@ class DBHelper(private val mContext: Context
         db.execSQL(CREATE_TABLE_CONTACT)
         db.execSQL(CREATE_TABLE_BLOCKCONTACT)
         db.execSQL(CREATE_TABLE_REGISTERCONTACT)
+        db.execSQL(CREATE_TABLE_DUBLICATECONTACT)
 
     }
 
@@ -311,6 +350,7 @@ class DBHelper(private val mContext: Context
         db.execSQL(DELETE_CONTACT)
         db.execSQL(DELETE_BLOCKCONTACT)
         db.execSQL(DELETE_RegisterCONTACT)
+        db.execSQL(DELETE_DUBLICATECONTACT)
         Log.e("dbhelper", "Database Version: OLD: "+ oldVersion + " = NEW: "+newVersion);
         onCreate(db)
     }
@@ -836,8 +876,81 @@ class DBHelper(private val mContext: Context
         values.put(CONTACT_Gender, contactdata.contactgender)
         values.put(CONTACT_Tage, contactdata.contacttage)
         values.put(CONTACT_Countrycode, contactdata.contactcountrycode)
+        values.put(CONTACT_Status, contactdata.status)
         return db.insert(TABLE_CONTACT, null, values)
 
+    }
+
+
+    fun updateContactdata(contactdata: ContactListItem) {
+
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(CONTACT_UserName, contactdata.contactusername)
+        values.put(CONTACT_NUMBER, contactdata.contactNumber)
+        values.put(CONTACT_EmailID, contactdata.contactemail)
+        values.put(CONTACT_Firstname, contactdata.contactfirstname)
+        values.put(CONTACT_Lastname, contactdata.contactlastname)
+        values.put(CONTACT_Birthdate, contactdata.contactebirthdate)
+        values.put(CONTACT_ProfilePic, contactdata.contactimage)
+        values.put(CONTACT_Address, contactdata.contactaddress)
+        values.put(CONTACT_AdditionalNumber, contactdata.contactadditionalnumber)
+        values.put(CONTACT_Gender, contactdata.contactgender)
+        values.put(CONTACT_Tage, contactdata.contacttage)
+        values.put(CONTACT_Countrycode, contactdata.contactcountrycode)
+        values.put(CONTACT_Status, contactdata.status)
+
+        db.update(TABLE_CONTACT, values, ""+ CONTACT_ID +"= '"+ contactdata.contactid+"' ", null)
+        db.close()
+    }
+
+    fun addDublicateContactdata(contactdata: ContactListItem) : Long{
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DUPLICATE_UserName, contactdata.contactusername)
+        values.put(DUPLICATE_NUMBER, contactdata.contactNumber)
+        values.put(DUPLICATE_EmailID, contactdata.contactemail)
+        values.put(DUPLICATE_Firstname, contactdata.contactfirstname)
+        values.put(DUPLICATE_Lastname, contactdata.contactlastname)
+        values.put(DUPLICATE_Birthdate, contactdata.contactebirthdate)
+        values.put(DUPLICATE_ProfilePic, contactdata.contactimage)
+        values.put(DUPLICATE_Address, contactdata.contactaddress)
+        values.put(DUPLICATE_AdditionalNumber, contactdata.contactadditionalnumber)
+        values.put(DUPLICATE_Gender, contactdata.contactgender)
+        values.put(DUPLICATE_Tage, contactdata.contacttage)
+        values.put(DUPLICATE_Countrycode, contactdata.contactcountrycode)
+        values.put(DUPLICATE_Status, contactdata.status)
+        return db.insert(TABLE_DUBLICATECONTACT, null, values)
+
+    }
+
+
+
+
+    fun updateDublicateContactdata(contactdata: ContactListItem) {
+
+
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DUPLICATE_UserName, contactdata.contactusername)
+        values.put(DUPLICATE_NUMBER, contactdata.contactNumber)
+        values.put(DUPLICATE_EmailID, contactdata.contactemail)
+        values.put(DUPLICATE_Firstname, contactdata.contactfirstname)
+        values.put(DUPLICATE_Lastname, contactdata.contactlastname)
+        values.put(DUPLICATE_Birthdate, contactdata.contactebirthdate)
+        values.put(DUPLICATE_ProfilePic, contactdata.contactimage)
+        values.put(DUPLICATE_Address, contactdata.contactaddress)
+        values.put(DUPLICATE_AdditionalNumber, contactdata.contactadditionalnumber)
+        values.put(DUPLICATE_Gender, contactdata.contactgender)
+        values.put(DUPLICATE_Tage, contactdata.contacttage)
+        values.put(DUPLICATE_Countrycode, contactdata.contactcountrycode)
+        values.put(DUPLICATE_Status, contactdata.status)
+
+
+        db.update(TABLE_DUBLICATECONTACT, values, ""+ DUPLICATE_ID+"= '"+ contactdata.contactid+"' ", null)
+        db.close()
     }
 
 
@@ -857,6 +970,7 @@ class DBHelper(private val mContext: Context
         values.put(BLOCK_Gender, contactdata.contactgender)
         values.put(BLOCK_Tage, contactdata.contacttage)
         values.put(BLOCK_Countrycode, contactdata.contactcountrycode)
+        values.put(BLOCK_Status, contactdata.status)
         return db.insert(TABLE_BLOCKCONTACT, null, values)
 
     }
@@ -883,6 +997,8 @@ class DBHelper(private val mContext: Context
 
     }
 
+
+
     fun updateregisterContactdata(contactdata: UserRegistrationClass) {
 
 
@@ -903,6 +1019,16 @@ class DBHelper(private val mContext: Context
 
         db.update(TABLE_RegisterCONTACT, values, ""+ Register_ID+"= '"+ contactdata.registerid+"' ", null)
         db.close()
+    }
+
+    fun getDublicateAllData(): Cursor {
+        val db = this.writableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_DUBLICATECONTACT ORDER BY $DUPLICATE_UserName", null)
+    }
+
+    fun getCheckdataData(mobilenumber:String): Cursor {
+        val db = this.writableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_DUBLICATECONTACT WHERE $DUPLICATE_NUMBER = '$mobilenumber'", null)
     }
 
     fun getRegisterData(username:String,mobilenumber:String): Cursor {
@@ -933,7 +1059,10 @@ class DBHelper(private val mContext: Context
         val db = this.writableDatabase
         return db.rawQuery("SELECT * FROM $TABLE_BLOCKCONTACT ORDER BY $BLOCK_UserName", null)
     }
-
+    fun getBlockContactData(mobilenumber:String): Cursor {
+        val db = this.writableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_BLOCKCONTACT WHERE $BLOCK_NUMBER = '$mobilenumber'", null)
+    }
     fun tableExists(): Int {
         val db = this.writableDatabase
         val cursor = db.rawQuery("SELECT  * FROM $TABLE_CONTACT", null)

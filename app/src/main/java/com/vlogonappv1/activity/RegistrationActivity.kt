@@ -1,4 +1,4 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.*
 
@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vlogonappv1.R
 import com.vlogonappv1.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import java.util.*
 import com.vlogonappv1.spinnerdatepicker.DatePicker
@@ -217,7 +218,7 @@ class RegistrationActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListe
         }
 
 
-        checkBoxbackupandrestore.setOnCheckedChangeListener { _, isChecked ->
+        /*checkBoxbackupandrestore.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked)
             {
                 mSessionHolder.backupsetupornot="true"
@@ -225,7 +226,7 @@ class RegistrationActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListe
             {
                 mSessionHolder.backupsetupornot="false"
             }
-        }
+        }*/
 
 
         addmobilebutton.clicks().subscribe {

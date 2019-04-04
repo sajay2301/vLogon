@@ -7,198 +7,197 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-
-        android:background="@color/white"
-        android:orientation="horizontal">
-
     <LinearLayout
-            android:id="@+id/llCall"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:gravity="center"
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/llCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-            <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/chat_icon"/>
+                    android:orientation="vertical">
 
-            <ImageView
-                    android:layout_width="@dimen/_13sdp"
-                    android:layout_height="@dimen/_13sdp"
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/chat_icon"/>
+
+                <ImageView
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_biz_call"/>
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_call_us"
                     android:visibility="gone"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_biz_call"/>
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
 
-        </FrameLayout>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+                android:id="@+id/llmassage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="@string/label_call_us"
                 android:visibility="gone"
-                android:textColor="@color/text_semi_dark"
-                android:textSize="@dimen/_12sdp"
-        />
+                android:orientation="vertical"
+        >
 
-    </LinearLayout>
-
-    <LinearLayout
-            android:id="@+id/llmassage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical"
-            >
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-            <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_biz_unchecked"/>
+                    android:orientation="vertical">
 
-            <ImageView
-                    android:layout_width="@dimen/_13sdp"
-                    android:layout_height="@dimen/_13sdp"
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_biz_unchecked"/>
+
+                <ImageView
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_biz_rate"/>
+
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_biz_rate"/>
-
-
-        </FrameLayout>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="@string/label_rate"
-                android:visibility="gone"
-                android:textColor="@color/text_semi_dark"
-                android:textSize="@dimen/_12sdp"
-        />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:id="@+id/llblockcall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-            <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/block_contact"/>
-
-            <ImageView
-                    android:layout_width="@dimen/_13sdp"
-                    android:layout_height="@dimen/_13sdp"
-                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_rate"
                     android:visibility="gone"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_biz_inquiry"/>
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
 
-        </FrameLayout>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+                android:id="@+id/llblockcall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="@string/label_inquiry"
-                android:visibility="gone"
-                android:textColor="@color/text_semi_dark"
-                android:textSize="@dimen/_12sdp"
-        />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:id="@+id/llshareContact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-            <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:adjustViewBounds="true"
-                    android:tint="@color/black"
-                    android:src="@drawable/ic_biz_unchecked"/>
+                    android:orientation="vertical">
 
-            <ImageView
-                    android:layout_width="@dimen/_13sdp"
-                    android:layout_height="@dimen/_13sdp"
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/block_contact"/>
+
+                <ImageView
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_biz_inquiry"/>
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:tint="@color/black"
-                    android:src="@drawable/ic_biz_share"/>
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/label_inquiry"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
 
-        </FrameLayout>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+                android:id="@+id/llshareContact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="Share"
-                android:visibility="gone"
-                android:textColor="@color/text_semi_dark"
-                android:textSize="@dimen/_12sdp"
-        />
+                android:orientation="vertical">
 
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/black"
+                        android:src="@drawable/ic_biz_unchecked"/>
+
+                <ImageView
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/black"
+                        android:src="@drawable/ic_biz_share"/>
+
+            </FrameLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Share"
+                    android:visibility="gone"
+                    android:textColor="@color/text_semi_dark"
+                    android:textSize="@dimen/_12sdp"
+            />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

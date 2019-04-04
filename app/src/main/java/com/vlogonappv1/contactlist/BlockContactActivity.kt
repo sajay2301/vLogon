@@ -13,9 +13,10 @@ import com.vlogonappv1.adapter.BlockAdapter
 import com.vlogonappv1.dataclass.ContactListItem
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.db.DBHelper
+import kotlinx.android.synthetic.main.activity_block_contact.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
-import kotlinx.android.synthetic.main.registerlayout.*
+
 
 class BlockContactActivity : AppCompatActivity() {
 
@@ -59,7 +60,7 @@ class BlockContactActivity : AppCompatActivity() {
         val c = db!!.getBlockContactData()
         if (c != null && c.count > 0) {
             while (c.moveToNext()) {
-                val blockcontactid = c.getString(0)
+                val blockcontactid = c.getInt(0)
                 val name = c.getString(1)
                 val phoneNo = c.getString(2)
                 val emailid = c.getString(3)

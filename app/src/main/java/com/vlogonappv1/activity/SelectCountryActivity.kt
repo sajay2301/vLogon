@@ -1,4 +1,4 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -16,6 +16,7 @@ import android.content.res.TypedArray
 
 import android.widget.AdapterView
 import com.jakewharton.rxbinding2.view.clicks
+import com.vlogonappv1.R
 import com.vlogonappv1.adapter.CountryListArrayAdapter
 import kotlinx.android.synthetic.main.activity_select_country.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

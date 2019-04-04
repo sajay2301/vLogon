@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
 import com.vlogonappv1.dataclass.ProgressDialogshow
-import com.vlogonappv1.MainActivity
+import com.vlogonappv1.activity.MainActivity
 import com.vlogonappv1.R
 import kotlinx.android.synthetic.main.activity_email_address_verification.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

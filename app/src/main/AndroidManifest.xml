@@ -22,12 +22,20 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activity.RestoreFoundActivity">
+        </activity>
+        <activity android:name=".activity.ViewPagerActivity">
+        </activity>
+        <activity android:name=".activity.SelectImportContactActivity">
+        </activity>
+        <activity android:name=".activity.CommonAddActivity">
+        </activity>
         <activity android:name=".contactlist.BlockContactActivity">
         </activity>
         <activity android:name=".contactlist.ScanQrCodeActivity">
         </activity>
         <activity
-                android:name=".UserLoginActivity"
+                android:name=".activity.UserLoginActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,11 +44,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".LoginActivity"
+                android:name=".activity.LoginActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name=".activity.MainActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity">
@@ -57,7 +65,7 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"
                 tools:replace="android:theme"/>
         <activity
-                android:name=".RegistrationActivity"
+                android:name=".activity.RegistrationActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
@@ -85,15 +93,15 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".OtpVerificationActivity"
+                android:name=".activity.OtpVerificationActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".ProfileActivity"
+                android:name=".activity.ProfileActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".SelectCountryActivity"
+                android:name=".activity.SelectCountryActivity"
                 android:screenOrientation="portrait">
         </activity>
 
@@ -101,14 +109,15 @@
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="${applicationId}.provider"
                 android:exported="false"
-                android:grantUriPermissions="true">
+                android:grantUriPermissions="true"
+                tools:replace="android:authorities">
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/provider_paths"/>
         </provider>
 
         <activity
-                android:name=".FullscreenActivity"
+                android:name=".activity.FullscreenActivity"
                 android:label="@string/title_activity_fullscreen"
                 android:screenOrientation="portrait">
             <intent-filter>
@@ -122,7 +131,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
         <activity
                 android:name=".twofactorverification.EnterMobileNumberActivity"
                 android:screenOrientation="portrait">
@@ -136,11 +144,11 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".BackupActivity"
+                android:name=".activity.BackupActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".CustomErrorActivity"
+                android:name=".activity.CustomErrorActivity"
                 android:label="@string/error_title"
                 android:process=":error_activity"/>
 
@@ -152,6 +160,8 @@
         <activity android:name=".contactlist.AddressBookActivity">
         </activity>
         <activity android:name=".contactlist.AddContactActivity">
+        </activity>
+        <activity android:name=".activity.DetailViewPagerActivity">
         </activity>
     </application>
 

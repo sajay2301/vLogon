@@ -1,4 +1,4 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.rxbinding2.view.clicks
+import com.vlogonappv1.AppApplication
+import com.vlogonappv1.R
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.service.Alarm
 import com.vlogonappv1.twofactorverification.FirstStepMobileVerificationActivity

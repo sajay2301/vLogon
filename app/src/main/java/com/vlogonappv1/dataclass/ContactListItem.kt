@@ -15,8 +15,9 @@ class ContactListItem {
     var contactcountrycode: String? = null
     var contactadditionalnumber: String? = null
     var contacttage: String? = null
-    var contactid: String? = null
-
+    var contactid: Int = 0
+    var isSelected: Boolean = false
+    var status: String? = null
 
 
 }

@@ -1,5 +1,6 @@
 package com.vlogonappv1.contactlist
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
@@ -46,10 +47,16 @@ class AddressBookActivity : AppCompatActivity(),LoaderManager.LoaderCallbacks<Cu
 
     private lateinit var registerfragment : RegisterFragment
     private lateinit var unregisterfragment : UnRegisterFragment
+
+
+    companion object {
+        var fa: Activity? = null
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address_book)
-
+        fa = this;
         toolbar?.apply {
 
             tvToolbarTitle.text = "Address Book"
@@ -216,6 +223,7 @@ class AddressBookActivity : AppCompatActivity(),LoaderManager.LoaderCallbacks<Cu
                         contactdata.contactcountrycode = ""
                         contactdata.contactadditionalnumber =""
                         contactdata.contacttage = ""
+                        contactdata.status = ""
                         val id_db =  db!!.addContactdata(contactdata)
 
                         db!!.closeDB()

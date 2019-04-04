@@ -9,7 +9,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import com.vlogonappv1.R
-import com.vlogonappv1.SelectCountryActivity
+import com.vlogonappv1.activity.SelectCountryActivity
 import java.util.*
 
 class CountryListArrayAdapter(private val context: Activity, private val list: ArrayList<SelectCountryActivity.Country>) :

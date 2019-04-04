@@ -1,14 +1,11 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
+import android.os.*
 import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.util.Base64
@@ -29,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.rxbinding2.view.clicks
 import com.roughike.bottombar.BottomBar
+import com.vlogonappv1.AppApplication
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
+import com.vlogonappv1.R
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.dataclass.UserRegistrationClass
 import com.vlogonappv1.contactlist.AddressBookActivity
@@ -78,7 +77,6 @@ class MainActivity :  RemoteBackup() {
     private lateinit var bottomBar: BottomBar
     companion object {
 
-
         val REQUEST_CODE_PERMISSIONS = 2
         val REQUEST_CODE_SIGN_IN = 0
         val REQUEST_CODE_OPENING = 1
@@ -93,6 +91,7 @@ class MainActivity :  RemoteBackup() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         localBackup = LocalBackup(this)
         //remoteBackup = RemoteBackup(this@BackupActivity)
@@ -144,13 +143,13 @@ class MainActivity :  RemoteBackup() {
             startActivity(intent)
         }
 
-        if(mSessionHolder.backupsetupornot.equals("true"))
+      /*  if(mSessionHolder.backupsetupornot.equals("true"))
         {
             val intent = Intent(this@MainActivity, BackupActivity::class.java)
             overridePendingTransition(R.anim.enter, R.anim.exit)
             startActivity(intent)
             finish()
-        }
+        }*/
         UserLogin()
 
 
@@ -165,11 +164,6 @@ class MainActivity :  RemoteBackup() {
                 startActivity(intent)
                 overridePendingTransition(R.anim.enter, R.anim.exit)
                 finish()
-            }else
-            {
-                passworddialog = PasswordDialog(this@MainActivity,"restore")
-                passworddialog!!.show()
-
             }
         }
 
@@ -234,7 +228,7 @@ class MainActivity :  RemoteBackup() {
         val inFileName = this@MainActivity.getDatabasePath(DBHelper.DATABASE_NAME).toString()
 
         val query = Query.Builder()
-            .addFilter(Filters.eq(SearchableField.TITLE, AppApplication.mSessionHolder.User_Login +AppApplication.mSessionHolder.User_Mobilenumber + ".db"))
+            .addFilter(Filters.eq(SearchableField.TITLE, AppApplication.mSessionHolder.User_Login + AppApplication.mSessionHolder.User_Mobilenumber + ".db"))
             .build()
         // [END drive_android_query_title]
         val queryTask = driveResourceClient!!
@@ -333,7 +327,7 @@ class MainActivity :  RemoteBackup() {
                 }
 
                 val changeSet = MetadataChangeSet.Builder()
-                    .setTitle(AppApplication.mSessionHolder.User_Login +AppApplication.mSessionHolder.User_Mobilenumber + ".db")
+                    .setTitle(AppApplication.mSessionHolder.User_Login + AppApplication.mSessionHolder.User_Mobilenumber + ".db")
                     .setMimeType("application/db")
                     .setStarred(true)
                     .build()
@@ -412,7 +406,7 @@ class MainActivity :  RemoteBackup() {
                     } else {
 
                         dialog.dismiss()
-                        GetSearchInRelsult()
+                     //   GetSearchInRelsult()
                     }
                 } else {
                     dialog.dismiss()
@@ -527,7 +521,9 @@ class MainActivity :  RemoteBackup() {
                 when {
                     backupname.equals("localBackup") -> {
                         val outFileName =
-                            Environment.getExternalStorageDirectory().toString() + File.separator + resources.getString(R.string.app_name) + File.separator
+                            Environment.getExternalStorageDirectory().toString() + File.separator + resources.getString(
+                                R.string.app_name
+                            ) + File.separator
                         localBackup!!.performBackup(db!!, outFileName)
                     }
                     backupname.equals("localRestore") -> localBackup!!.performRestore(db!!)
@@ -976,8 +972,8 @@ class MainActivity :  RemoteBackup() {
             startDriveRestore()
         }else
         {
-            activity_backup_drive_textview_folder.text=AppApplication.mSessionHolder.setonnotset
-            txtaccountname.text=AppApplication.mSessionHolder.accountname
+            activity_backup_drive_textview_folder.text= AppApplication.mSessionHolder.setonnotset
+            txtaccountname.text= AppApplication.mSessionHolder.accountname
         }
     }
 
@@ -986,7 +982,7 @@ class MainActivity :  RemoteBackup() {
        dialog = ProgressDialogshow.progressDialog(this)
         dialog.show()
         val query = Query.Builder()
-            .addFilter(Filters.eq(SearchableField.TITLE, AppApplication.mSessionHolder.User_Login +AppApplication.mSessionHolder.User_Mobilenumber + ".db"))
+            .addFilter(Filters.eq(SearchableField.TITLE, AppApplication.mSessionHolder.User_Login + AppApplication.mSessionHolder.User_Mobilenumber + ".db"))
             .build()
         // [END drive_android_query_title]
         val queryTask = driveResourceClient!!

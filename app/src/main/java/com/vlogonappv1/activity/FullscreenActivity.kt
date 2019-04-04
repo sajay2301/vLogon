@@ -1,10 +1,12 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.google.firebase.auth.FirebaseAuth
+import com.vlogonappv1.AppApplication
+import com.vlogonappv1.R
 import com.vlogonappv1.twofactorverification.EmailAddressVerificationActivity
 
 import com.vlogonappv1.forgetpassword.ForgetPasswordActivity
@@ -63,7 +65,16 @@ class FullscreenActivity : AppCompatActivity() {
                 startActivity(intent)
                 finishAffinity()
                 finish()
-            }
+
+        }else if(AppApplication.mSessionHolder.User_ActivityName.equals("restoreactivity"))
+        {
+            val intent = Intent(this@FullscreenActivity, RestoreFoundActivity::class.java)
+            intent.putExtra("emaillink", emailLink)
+            overridePendingTransition(R.anim.enter, R.anim.exit)
+            startActivity(intent)
+            finishAffinity()
+            finish()
+        }
             else
             {
                 val intent = Intent(this@FullscreenActivity, EmailAddressVerificationActivity::class.java)

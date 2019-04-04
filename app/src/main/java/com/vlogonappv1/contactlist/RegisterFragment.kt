@@ -2,8 +2,10 @@ package com.vlogonappv1.contactlist
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,16 +15,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
+import com.vlogonappv1.AppApplication
 import com.vlogonappv1.adapter.RegisterAdapter
 import com.vlogonappv1.dataclass.ContactListItem
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.dataclass.UserRegistrationClass
 import com.vlogonappv1.R
+import com.vlogonappv1.activity.CommonAddActivity
+import com.vlogonappv1.adapter.ExpandableListAdapter
+import com.vlogonappv1.adapter.RegisterExpandableListAdapter
 import com.vlogonappv1.db.DBHelper
 import kotlinx.android.synthetic.main.activity_select_country.*
 import kotlinx.android.synthetic.main.registerlayout.*
 import java.lang.Exception
 import java.util.*
+
+
 
 class RegisterFragment : Fragment() {
 
@@ -38,7 +46,9 @@ class RegisterFragment : Fragment() {
     lateinit var dialog: Dialog
     internal var flag = 0
 
-    private var RegisterRecyclerView: RecyclerView? = null
+
+    private var registerfab: FloatingActionButton? = null
+
     private val userdataList = ArrayList<UserRegistrationClass>()
     private val filterdata = ArrayList<UserRegistrationClass>()
     val registercontactList = ArrayList<ContactListItem>()
@@ -52,8 +62,18 @@ class RegisterFragment : Fragment() {
         Firestoredb = FirebaseFirestore.getInstance()
         db = DBHelper(activity!!)
         exist = db!!.tableExists()
-        RegisterRecyclerView = rootview?.findViewById(R.id.rvContacts)
+        registerfab = rootview?.findViewById(R.id.registerfab)
+
+        registerfab!!.setOnClickListener { view ->
+
+            val intent = Intent( activity!!, CommonAddActivity::class.java)
+            activity!!.overridePendingTransition(R.anim.enter, R.anim.exit)
+            startActivity(intent)
+
+        }
+
         getdata()
+
 
         return rootview
     }
@@ -72,10 +92,6 @@ class RegisterFragment : Fragment() {
                     var contactListItem: UserRegistrationClass
 
                     for (document in task.result!!) {
-                        //  Log.e("data", document.getId() + " => " + document.get("name"));
-
-
-
 
                         contactListItem = UserRegistrationClass()
                         contactListItem.username= document.get("UserName").toString()
@@ -107,10 +123,8 @@ class RegisterFragment : Fragment() {
                     }
                 } else {
                     dialog.dismiss()
-                    Log.e("dasd", "Error getting documents.", task.exception)
                 }
             }
-
 
 
 
@@ -139,8 +153,9 @@ class RegisterFragment : Fragment() {
                     contactListItem.contactemail = emailid
                     contactList.add(contactListItem)
 
+                    val matchphone=phoneNo.replace(" ","")
 
-                    if(item.countrycode+""+item.mobilenumber==phoneNo.replace(" ","") || item.mobilenumber==phoneNo.replace(" ",""))
+                    if(item.countrycode+""+item.mobilenumber.toString() == matchphone || item.mobilenumber== matchphone)
                     {
 
 
@@ -154,7 +169,9 @@ class RegisterFragment : Fragment() {
 
                         }else
                         {
+
                             val id_db = db.addregisterContactdata(item)
+
                         }
 
 
@@ -175,7 +192,7 @@ class RegisterFragment : Fragment() {
         val getRegisterData = db!!.allgetRegisterData()
         if (getRegisterData != null && getRegisterData.count > 0) {
             while (getRegisterData.moveToNext()) {
-                val userid = getRegisterData.getString(0)
+                val userid = getRegisterData.getInt(0)
                 val username = getRegisterData.getString(1)
                 val phoneNo = getRegisterData.getString(2)
                 val emailid = getRegisterData.getString(3)
@@ -190,38 +207,52 @@ class RegisterFragment : Fragment() {
                 val contact_tage = getRegisterData.getString(12)
 
 
+                val checkdata = db!!.getBlockContactData(phoneNo)
+                if (checkdata != null && checkdata.count > 0)
+                {
+
+                }else
+                {
+                    if(phoneNo == AppApplication.mSessionHolder.User_Mobilenumber)
+                    {
+                    }else {
+                        registercontactListItem = ContactListItem()
+                        registercontactListItem.contactid = userid
+                        registercontactListItem.contactNumber = phoneNo
+                        registercontactListItem.contactemail = emailid
+                        registercontactListItem.contactusername = username
+                        registercontactListItem.contactfirstname = firstname
+                        registercontactListItem.contactlastname = lastname
+                        registercontactListItem.contactebirthdate = birthdate
+                        registercontactListItem.contactimage = profilepic
+                        registercontactListItem.contactgender = gender
+                        registercontactListItem.contactaddress = address
+                        registercontactListItem.contactcountrycode = countrycode
+                        registercontactListItem.contactadditionalnumber = additionalnumber
+                        registercontactListItem.contacttage = contact_tage
+                        registercontactList.add(registercontactListItem)
+                    }
+                }
 
 
-                registercontactListItem = ContactListItem()
-                registercontactListItem.contactid = userid
-                registercontactListItem.contactNumber = phoneNo
-                registercontactListItem.contactemail = emailid
-                registercontactListItem.contactusername = username
-                registercontactListItem.contactfirstname = firstname
-                registercontactListItem.contactlastname = lastname
-                registercontactListItem.contactebirthdate = birthdate
-                registercontactListItem.contactimage = profilepic
-                registercontactListItem.contactgender = gender
-                registercontactListItem.contactaddress = address
-                registercontactListItem.contactcountrycode = countrycode
-                registercontactListItem.contactadditionalnumber = additionalnumber
-                registercontactListItem.contacttage = contact_tage
-                registercontactList.add(registercontactListItem)
 
 
             }
         }
-        contactAdapter = RegisterAdapter(registercontactList,filterdata,mContext!!)
+       /* contactAdapter = RegisterAdapter(registercontactList,filterdata,mContext!!)
         RegisterRecyclerView!!.layoutManager = LinearLayoutManager(mContext!!)
-        RegisterRecyclerView!!.adapter = contactAdapter
+        RegisterRecyclerView!!.adapter = contactAdapter*/
+
+        registerexpandablelistadapter = RegisterExpandableListAdapter(activity!!, rvContacts, registercontactList)
+        rvContacts.setAdapter(registerexpandablelistadapter)
     }
 
 
     companion object {
-        var contactAdapter:RegisterAdapter? = null
+        var registerexpandablelistadapter: RegisterExpandableListAdapter? = null
         fun searchfilterdata(query : String) {
             // contactAdapter?.filter(query)
-            contactAdapter!!.filter(query)
+            registerexpandablelistadapter!!.filter(query)
         }
 
     }

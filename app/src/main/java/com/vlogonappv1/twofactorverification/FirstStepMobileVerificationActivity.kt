@@ -17,10 +17,11 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.BackupActivity
+import com.vlogonappv1.activity.BackupActivity
 import com.vlogonappv1.dataclass.ProgressDialogshow
-import com.vlogonappv1.MainActivity
+import com.vlogonappv1.activity.MainActivity
 import com.vlogonappv1.R
+import com.vlogonappv1.activity.RestoreFoundActivity
 import com.vlogonappv1.db.DBHelper
 import kotlinx.android.synthetic.main.activity_otp_verification.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
@@ -165,14 +166,26 @@ class FirstStepMobileVerificationActivity : AppCompatActivity() {
 
                     dialog.dismiss()
                     if (mSessionHolder.Backupname.equals("restore")) {
-                        mSessionHolder.User_ActivityName = ""
-                        mSessionHolder.User_PersonalEmailId = ""
+                        if(mSessionHolder.User_ActivityName.equals("restoreactivity"))
+                        {
+                            mSessionHolder.User_ActivityName = ""
+                            mSessionHolder.User_PersonalEmailId = ""
 
-                        mSessionHolder.twostepverify = "true"
-                        val intent = Intent(this@FirstStepMobileVerificationActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.enter, R.anim.exit)
-                        finish()
+                            mSessionHolder.twostepverify = "true"
+                            val intent = Intent(this@FirstStepMobileVerificationActivity, RestoreFoundActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }else {
+                            mSessionHolder.User_ActivityName = ""
+                            mSessionHolder.User_PersonalEmailId = ""
+
+                            mSessionHolder.twostepverify = "true"
+                            val intent = Intent(this@FirstStepMobileVerificationActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.enter, R.anim.exit)
+                            finish()
+                        }
                     } else if (mSessionHolder.Backupname.equals("none")) {
                         mSessionHolder.User_ActivityName = ""
                         mSessionHolder.User_PersonalEmailId = ""
@@ -200,7 +213,9 @@ class FirstStepMobileVerificationActivity : AppCompatActivity() {
                         startActivity(intent)
                         overridePendingTransition(R.anim.enter, R.anim.exit)
                         finish()
-                    } else
+                    }
+
+                    else
 
                     {
                         val intent = Intent(

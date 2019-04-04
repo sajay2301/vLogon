@@ -1,19 +1,25 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
 import android.support.annotation.VisibleForTesting
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -23,10 +29,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.jakewharton.rxbinding2.view.clicks
 import com.vlogonappv1.db.DBHelper
 import com.vlogonappv1.AppApplication.Companion.mSessionHolder
-import com.vlogonappv1.dataclass.ImagePickerHelper
-import com.vlogonappv1.dataclass.ProgressDialogshow
-import com.vlogonappv1.dataclass.UserRegistrationClass
-import com.vlogonappv1.dataclass.getPath
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
@@ -34,10 +36,18 @@ import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.vlogonappv1.BuildConfig
+import com.vlogonappv1.R
+import com.vlogonappv1.dataclass.*
 import com.vlogonappv1.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import java.util.*
 import com.vlogonappv1.spinnerdatepicker.DatePicker
 import com.vlogonappv1.spinnerdatepicker.DatePickerDialog
+import kotlinx.android.synthetic.main.qrcodedialoglayout.*
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
@@ -61,6 +71,7 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
     private var imagePickerHelper: ImagePickerHelper? = null
     private var adImage: File? = null
     var profilepic: String? = null
+    var qrcodedisplaystring: String? = null
     var gender: String? = null
     private var fileRequest = AD_IMAGE
     lateinit var dialog: Dialog
@@ -79,11 +90,12 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
     internal var checkdata = 0
     lateinit var Firestoredb: FirebaseFirestore
     var passwordencodedKey: String=""
+    var displayqrcode: Bitmap? =  null
 
     companion object {
         private const val POST_IMAGE = 0
         private const val AD_IMAGE = 1
-
+        var qrdialog: Dialog? = null
     }
 
 
@@ -105,6 +117,8 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
 
         }
+
+
         auth = FirebaseAuth.getInstance()
         db = DBHelper(applicationContext)
         Firestoredb = FirebaseFirestore.getInstance()
@@ -124,7 +138,7 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
                 mSessionHolder.User_ActivityName = ""
 
                 mSessionHolder.User_officecolorcode = ""
-               // UploadImageFileToFirebaseStorage()
+                //UploadImageFileToFirebaseStorage()
                 updateprofile()
                 //BackUpTask()
             }
@@ -202,6 +216,13 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
         //   checkIntent(intent)
         UserLogin()
+
+        QRcodedisplay.clicks().subscribe{
+
+            qrdialog = QRcodeDialog(this@ProfileActivity,displayqrcode)
+            qrdialog!!.show()
+
+        }
     }
     @VisibleForTesting
     internal fun showDate(year: Int, monthOfYear: Int, dayOfMonth: Int, spinnerTheme: Int) {
@@ -278,6 +299,8 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
                         etusername.text = document.get("UserName").toString()
 
 
+                        generateCode(document.get("UniqueID").toString())
+                        qrcodedisplaystring=document.get("UniqueID").toString()
                         profilepic = document.get("ProfilePic").toString()
                         Glide.with(applicationContext).load(profilepic)
                             .apply(
@@ -371,6 +394,20 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
             }
 
 
+    }
+
+    private fun generateCode(input: String) {
+        val codeGenerator = CodeGenerator()
+        codeGenerator.generateQRFor(input)
+
+        codeGenerator.setResultListener(object : CodeGenerator.ResultListener {
+            override  fun onResult(bitmap: Bitmap) {
+
+                QRcodedisplay.setImageBitmap(bitmap)
+                displayqrcode=bitmap
+            }
+        })
+        codeGenerator.execute()
     }
      private fun getTasks() {
         class GetTasks : AsyncTask<Void, Void, List<UserRegistrationClass>>() {
@@ -469,6 +506,8 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
                     }
 
+
+
                 } catch (e: IndexOutOfBoundsException) {
 
                 }
@@ -479,6 +518,85 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
         val gt = GetTasks()
         gt.execute()
     }
+
+    fun QRcodeDialog(context: Context, qrcode: Bitmap?): Dialog {
+
+        val inflate = LayoutInflater.from(context).inflate(R.layout.qrcodedialoglayout, null)
+        val resetdialog = Dialog(context)
+        resetdialog.setContentView(inflate)
+        resetdialog.setCancelable(false)
+        resetdialog.window!!.setBackgroundDrawable(
+            ColorDrawable(Color.TRANSPARENT)
+        )
+        val window = resetdialog.window
+        val wlp = window.attributes
+        wlp.gravity = Gravity.CENTER
+        window.attributes = wlp
+        resetdialog.window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+
+        resetdialog.codedisplay.setImageBitmap(qrcode)
+
+        resetdialog.buttoncancel.clicks().subscribe {
+            resetdialog.dismiss()
+        }
+
+        resetdialog.buttonshare.clicks().subscribe {
+
+            var filenameqrcode= saveImageFile(qrcode!!,"qrcodesample")
+            var uri = FileProvider.getUriForFile(this@ProfileActivity, BuildConfig.APPLICATION_ID + ".provider",File(filenameqrcode!!));
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(intent, "Share QR Code Image"))
+
+        }
+
+        resetdialog.setOnKeyListener { dialog, keyCode, event ->
+
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                resetdialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+
+
+        return resetdialog
+    }
+    private fun saveImageFile(bitmap: Bitmap, fileName: String): String {
+        var out: FileOutputStream? = null
+        val filePath = getFilename(fileName)
+
+
+
+        try {
+            out = FileOutputStream(filePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return filePath
+    }
+    private fun getFilename(fileName: String): String {
+        var fileName = fileName
+        val file = File(Environment.getExternalStorageDirectory().toString() + File.separator + resources.getString(R.string.app_name))
+
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        if (fileName.contains("/")) {
+            fileName = fileName.replace("/", "\\")
+        }
+        return file.absolutePath + "/" + fileName + ".png"
+    }
+
+
     fun UploadImageFileToFirebaseStorage() {
 
         dialog = ProgressDialogshow.progressDialog(this@ProfileActivity)
@@ -659,10 +777,6 @@ class ProfileActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
                 return "string"
             }
 
-            override fun onPostExecute(response: String) {
-                super.onPostExecute(response)
-
-            }
         }
 
         val st = SaveTask()

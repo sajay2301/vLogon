@@ -752,4 +752,10 @@
     <string name="label_share_contact_using">Share Contact Using...</string>
     <string name="label_name">Name</string>
     <string name="label_contact_number">CONTACT NUMBER</string>
+
+    <string name="activity_restore_drive_desc">Restore your data from Google Drive. if you do not restore now. you wanot
+        be able to restore later.
+    </string>
+
+
 </resources>

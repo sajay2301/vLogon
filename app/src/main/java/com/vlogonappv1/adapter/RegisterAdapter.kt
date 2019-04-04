@@ -14,10 +14,14 @@ import com.vlogonappv1.dataclass.ContactListItem
 import com.vlogonappv1.R
 import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.jakewharton.rxbinding2.view.clicks
-import com.vlogonappv1.SelectCountryActivity
 import com.vlogonappv1.contactlist.AddContactActivity
+import com.vlogonappv1.contactlist.AddressBookActivity
 import com.vlogonappv1.dataclass.UserRegistrationClass
 import java.util.*
+import android.app.Activity
+
+
+
 
 
 class RegisterAdapter(var list: ArrayList<ContactListItem>,
@@ -78,7 +82,7 @@ class RegisterAdapter(var list: ArrayList<ContactListItem>,
                 intent.putExtra("emailid",contactListItem.contactemail)
 
 
-
+                (mContext as AddressBookActivity).finish()
 
                 mContext.startActivity(intent)
 

@@ -64,7 +64,7 @@
                         android:ellipsize="end"
                         android:fontFamily="sans-serif-medium"
                         android:lines="1"
-                        android:text="User Name"
+                        android:text="Display Name"
                         android:textColor="@color/black"
                         android:textSize="14dp"/>
 
@@ -643,12 +643,13 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:weightSum="10">
             <Button
                     android:id="@+id/btnscanqrcode"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:visibility="gone"
                     android:layout_weight="5"
 
                     android:layout_gravity="center_horizontal"
@@ -659,12 +660,13 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                     android:textAllCaps="false"
-                    android:text="Scan QR Code"
+                    android:text="Invite"
                     android:textColor="@android:color/white"
                     android:textSize="18dp"/>
 
 
             <Button
+                    android:visibility="gone"
                     android:id="@+id/btnusername"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -677,7 +679,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                     android:textAllCaps="false"
-                    android:text="Add by UserName"
+                    android:text="Share"
                     android:textColor="@android:color/white"
                     android:textSize="18dp"/>
         </LinearLayout>

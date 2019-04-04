@@ -1,12 +1,11 @@
-package com.vlogonappv1
+package com.vlogonappv1.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
-import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.vlogonappv1.R
 
 
 class CustomErrorActivity : AppCompatActivity() {

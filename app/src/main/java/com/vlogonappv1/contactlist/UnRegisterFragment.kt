@@ -17,6 +17,7 @@ import com.vlogonappv1.dataclass.ContactListItem
 import com.vlogonappv1.dataclass.ProgressDialogshow
 import com.vlogonappv1.dataclass.UserRegistrationClass
 import com.vlogonappv1.R
+import com.vlogonappv1.activity.CommonAddActivity
 import com.vlogonappv1.db.DBHelper
 import kotlinx.android.synthetic.main.unregisterlayout.*
 import java.lang.Exception
@@ -58,9 +59,8 @@ class UnRegisterFragment : Fragment() {
 
 
         fab.setOnClickListener { view ->
-            val intent = Intent( activity!!, AddContactActivity::class.java)
-            intent.putExtra("addcontact","manually")
-            intent.putExtra("value","false")
+
+            val intent = Intent( activity!!, CommonAddActivity::class.java)
             activity!!.overridePendingTransition(R.anim.enter, R.anim.exit)
             startActivity(intent)
 
@@ -118,14 +118,11 @@ class UnRegisterFragment : Fragment() {
         val contactList = ArrayList<ContactListItem>()
         var contactListItem: ContactListItem
 
-
-
-        Log.e("size", userdataList.size.toString())
-        val c = db!!.getAllData()
+        val c = db!!.getDublicateAllData()
         if (c != null && c.count > 0) {
             while (c.moveToNext()) {
 
-                val userid = c.getString(0)
+                val userid = c.getInt(0)
                 val username = c.getString(1)
                 val phoneNo = c.getString(2)
                 val emailid = c.getString(3)
@@ -138,7 +135,7 @@ class UnRegisterFragment : Fragment() {
                 val countrycode = c.getString(10)
                 val additionalnumber = c.getString(11)
                 val contact_tage = c.getString(12)
-
+                val contact_status = c.getString(13)
 
                 contactListItem = ContactListItem()
                 contactListItem.contactid = userid
@@ -154,6 +151,7 @@ class UnRegisterFragment : Fragment() {
                 contactListItem.contactcountrycode = countrycode
                 contactListItem.contactadditionalnumber = additionalnumber
                 contactListItem.contacttage = contact_tage
+                contactListItem.status = contact_status
 
 
 
